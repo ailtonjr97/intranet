@@ -1,0 +1,85 @@
+<%- include('../partials/sidebar') %>
+<link rel="stylesheet" href="/css/table.css" />
+<link rel="stylesheet" href="/css/button8.css" />
+<link rel="stylesheet" href="/css/files.css" />
+<link rel="stylesheet" href="/css/anexoBotao.css" />
+
+
+<html>
+    <body>
+        <main>
+            <form action="/usuarios/registrar" method="POST">
+                <div class="row" id='masterRow' style="max-width: 99%; margin-left: 1%">
+                  <div class="row mt-4">
+                      <div class="col">
+                          <div class="form-floating">
+                              <input type="text" class="form-control" id="name" placeholder="Nome:" name="name">
+                              <label for="name">Nome:</label>
+                          </div>
+                      </div>
+                      <div class="col">
+                          <div class="form-floating mb-3">
+                              <input type="email" class="form-control" id="username" placeholder="Email:" name="email">
+                              <label for="username">Email:</label>
+                            </div>
+                      </div>
+                  </div>
+                  <div class="row mt-1">
+                    <div class="col-lg">
+                      <div class="form-floating">
+                        <input type="password" class="form-control" id="password" placeholder="Password:" name="password">
+                        <label for="password">Password:</label>
+                      </div>
+                  </div>
+                  </div>
+                  <!-- <div class="row mt-2">
+                        <div class="col">
+                          <div class="form-floating">
+                            <select class="form-select" id="isAdmin" aria-label="Floating label" name="isAdmin">
+                                <option value="False">No</option>
+                                <option value="True">Yes</option>
+                            </select>
+                          <label for="isAdmin">Is admin?:</label>
+                          </div>
+                        </div>
+                        <div class="col">
+                          <div class="form-floating">
+                            <select class="form-select" id="isActive" aria-label="Floating label" name="isActive">
+                                <option value="False">No</option>
+                                <option value="True">Yes</option>
+                            </select>
+                          <label for="isActive">Is active?:</label>
+                          </div>
+                        </div>
+                  </div> -->
+                  <div class="row mt-3">
+                    <div class="col">
+                      <div id="btnAnexo" style="height: 50px; border: 1px dashed #BBB; cursor:pointer;" onclick="getFile()">Anexar imagem de perfil</div>
+                      <div style='height: 0px;width:0px; overflow:hidden;'>
+                          <input id="upfile" type="file" value="upload" onchange="sub(this)" name="anexo" accept="image/*, video/*"/>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col d-flex justify-content-center">
+                      <button type="submit" id='botaoSalva' class="button-8" style="width: 120px;">Salvar</button>
+                  </div>
+                </div>
+              </form>
+        </main>
+    </body>
+    <script type="text/javascript">
+
+        function getFile(){
+            document.getElementById("upfile").click();
+        }
+
+        function sub(obj) {
+            var file = obj.value;
+            var fileName = file.split("\\");
+            document.getElementById("btnAnexo").innerHTML = fileName[fileName.length - 1];
+        }
+
+    </script>
+</html>
