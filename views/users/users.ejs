@@ -20,7 +20,7 @@
       </div>
       <div class="col-sm-2">
         <button type="button" class="button-8 mb-2" id="result" style="display: none; float: right;">
-          <span class="counter-value"></span>
+          <span class="counter-value"><%=results.usersCount%></span>
           resultados
         </button>
       </div>
@@ -70,15 +70,16 @@
           </tr>
         </thead>
         <tbody>
+          <%users.forEach ((user)=>{%>
           <tr>
             <td>
-                <p></p>
+                <p><%=user.id%></p>
             </td>
             <td>
-              <p></p>
+              <p><%=user.name%></p>
             </td>
             <td>
-              <p></p>
+              <p><%=user.email%></p>
             </td>
             <td>
               <p></p>
@@ -100,6 +101,7 @@
 
             </td>
           </tr>
+          <%})%>
         </tbody>
         <tbody></tbody>
       </table>
