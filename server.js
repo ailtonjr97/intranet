@@ -13,8 +13,8 @@ function authenticationMiddleware(req, res, next){
     return next()
   }else {
     req.session.returnTo = req.originalUrl;
-    res.redirect("/login");
-};
+    res.redirect("/login?invalido=true");
+  };
 }
 
 dotenv.config();

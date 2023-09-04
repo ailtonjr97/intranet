@@ -1,0 +1,48 @@
+<%- include('../partials/sidebar') %>
+
+
+<link rel="stylesheet" href="/css/table.css" />
+<link rel="stylesheet" href="/css/button8.css" />
+<link rel="stylesheet" href="/css/loading.css" />
+<link rel="stylesheet" href="/css/contador.css" />
+
+<style>
+    .form-floating{
+        margin-left: 1%;
+    }
+</style>
+
+<html>
+    <body>
+        <main>
+            <form action="/usuarios/editar/<%=user.id%>" method="post">
+                <div class="row mt-4">
+                    <div class="col d-flex justify-content-start">
+                        <div class="form-floating mb-3" style="width: 4%;">
+                            <input type="number" class="form-control" id="id" placeholder="<%=user.id%>" value="<%=user.id%>" readonly>
+                            <label for="id">ID:</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="nome" placeholder="Name:" name="name" value="<%=user.name%>">
+                            <label for="nome">Nome:</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="email" class="form-control" id="email" placeholder="<%=user.email%>" name="email" value="<%=user.email%>">
+                            <label for="email">E-mail:</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col d-flex justify-content-center">
+                        <button type="submit" id='botaoSalva' class="button-8" style="width: 120px;">Salvar</button>
+                    </div>
+                </div>
+            </form>
+        </main>
+    </body>
+</html>
+
+<script type="text/javascript" src="/js/carregador.js"></script>
+<script type="text/javascript" src="/js/confirmation.js"></script>
+<script type="text/javascript" src="/js/procura.js"></script>
+<script type="text/javascript" src="/js/contador.js"></script>

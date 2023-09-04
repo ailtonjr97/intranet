@@ -12,14 +12,13 @@
   <div style="padding-top: 1.5%">
     <div class="row">
       <div class="col-md-4">
-        <a class="button-8 mb-2" href="/usuarios/novo-usuario">Novo usuário</a>
-        <a class="button-8 mb-2" href="/usuarios/inativos">Inativos</a>
+        <a class="button-8 mb-2" href="/usuarios/">Ativos</a>
       </div>
       <div class="col-lg-6">
       </div>
       <div class="col-sm-2">
         <button type="button" class="button-8 mb-2" id="result" style="display: none; float: right;">
-          <span class="counter-value"><%=results.usersCount%></span>
+          <span class="counter-value"><%=results.inactiveUsersCount%></span>
           resultados
         </button>
       </div>
@@ -70,7 +69,7 @@
         </thead>
         <tbody>
           <%users.forEach ((user)=>{%>
-          <%if (user.active == 1){%>
+          <%if (user.active == 0){%>
           <tr>
             <td>
                 <p><%=user.id%></p>
@@ -90,7 +89,7 @@
             <td style="padding-bottom: 15px;">
               <a class="button-8" href="/usuarios/editar/<%=user.id%>">Editar</a>
 
-              <a class="button-8" href="/usuarios/inativar/<%=user.id%>">Inativar</a>
+              <a class="button-8" href="/usuarios/ativar/<%=user.id%>">Ativar</a>
 
               <a class="button-8" href="/users/resetpassword/">Resetar senha</a>
 
