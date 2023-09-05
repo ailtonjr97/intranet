@@ -61,8 +61,8 @@ let activateUser = async(id)=>{
 
 let editarUser = async(parameter, body)=>{
     const conn = await connect();
-    const values = [body.name, body.email, parameter];
-    await conn.query('UPDATE users SET name = ?, email = ? WHERE id = ?', values);
+    const values = [body.name, body.email, body.admin, parameter];
+    await conn.query('UPDATE users SET name = ?, email = ?, admin = ? WHERE id = ?', values);
 }
 
 
