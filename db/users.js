@@ -27,8 +27,8 @@ let countUsers = async(req, res)=>{
 
 let insertUser = async(user)=>{
     const conn = await connect();
-    const values = [user.name, user.email, user.password, user.salt, user.active];
-    await conn.query('INSERT INTO users (name, email, password, salt, active) VALUES (?, ?, ?, ?, ?)', values);
+    const values = [user.name, user.email, user.password, user.salt, 1, 0];
+    await conn.query('INSERT INTO users (name, email, password, salt, active, admin) VALUES (?, ?, ?, ?, ?, ?)', values);
 }
 
 let getUserByUsername = async(username)=>{
