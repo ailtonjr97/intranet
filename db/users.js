@@ -65,6 +65,12 @@ let editarUser = async(parameter, body)=>{
     await conn.query('UPDATE users SET name = ?, email = ?, admin = ? WHERE id = ?', values);
 }
 
+let changePassword = async(id, hashedPassword)=>{
+    const conn = await connect();
+    const values = [hashedPassword, id];
+    await conn.query('UPDATE users SET password = ? WHERE id = ?', values);
+}
+
 
 
 module.exports = {
@@ -76,5 +82,6 @@ module.exports = {
     inactiveUsersCount,
     inactivateUser,
     activateUser,
-    editarUser
+    editarUser,
+    changePassword
 };

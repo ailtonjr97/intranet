@@ -5,10 +5,12 @@ let users = async(req, res)=>{
     try {
         res.render('users/users.ejs', {
             users: await db.users(),
-            results: await db.countUsers()
+            results: await db.countUsers(),
+            logged: req.user
         })
     } catch (error) {
-        res.send(error);
+        console.log(error)
+        res.render('error')
     }
 }
 
@@ -16,7 +18,8 @@ let newUser = async(req, res)=>{
     try {
         res.render('users/newuser.ejs');
     } catch (error) {
-        res.send(error);
+        console.log(error)
+        res.render('error')
     }
 }
 
@@ -30,12 +33,9 @@ let createUser = async (req, res)=>{
         });
         res.redirect("/usuarios");
     } catch (error) {
-        res.send(error);
+        console.log(error)
+        res.render('error')
     }
-}
-
-let teste = async(req, res)=>{
-    console.log(req.body);
 }
 
 const logout = async(req, res)=>{
@@ -45,10 +45,15 @@ const logout = async(req, res)=>{
 }
 
 const inativos = async(req, res)=>{
-    res.render('users/inativos.ejs',{
-        users: await db.users(),
-        results: await db.inactiveUsersCount()
-    })
+    try {
+        res.render('users/inativos.ejs',{
+            users: await db.users(),
+            results: await db.inactiveUsersCount()
+        })
+    } catch (error) {
+        console.log(error)
+        res.render('error')
+    }
 }
 
 const inativar = async(req, res)=>{
@@ -56,7 +61,8 @@ const inativar = async(req, res)=>{
         await db.inactivateUser(req.params.id);
         res.redirect("/usuarios");
     } catch (error) {
-        console.log(error);
+        console.log(error)
+        res.render('error')
     }
 }
 
@@ -65,7 +71,8 @@ const ativar = async(req, res)=>{
         await db.activateUser(req.params.id);
         res.redirect("/usuarios/inativos");
     } catch (error) {
-        console.log(error);
+        console.log(error)
+        res.render('error')
     }
 }
 
@@ -75,7 +82,8 @@ const editar = async(req, res)=>{
             user: await db.getUserById(req.params.id)
         });
     } catch (error) {
-        console.log(error);
+        console.log(error)
+        res.render('error')
     }
 }
 
@@ -84,7 +92,31 @@ const editarUser = async(req, res)=>{
         await db.editarUser(req.params.id, req.body);
         res.redirect("/usuarios");
     } catch (error) {
-        console.log(error);
+        console.log(error)
+        res.render('error')
+    }
+}
+
+const changePassword = async(req, res)=>{
+    try {
+        await db.getUserById(req.params.id)
+        res.render("users/changePassword", {
+            user: await db.getUserById(req.params.id)
+        })
+    } catch (error) {
+        console.log(error)
+        res.render('error')
+    }
+}
+
+const changePasswordPost = async(req, res)=>{
+    try {
+        let hashedPassword = bcrypt.hashSync(req.body.password);
+        await db.changePassword(req.params.id, hashedPassword);
+        res.redirect("/usuarios");
+    } catch (error) {
+        console.log(error)
+        res.render('error')
     }
 }
 
@@ -92,11 +124,12 @@ module.exports = {
     users,
     newUser,
     createUser,
-    teste,
     logout,
     inativos,
     inativar,
     ativar,
     editar,
-    editarUser
+    editarUser,
+    changePassword,
+    changePasswordPost
 }
