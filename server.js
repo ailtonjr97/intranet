@@ -7,6 +7,7 @@ require('./auth.js')(passport);
 const home = require("./routes/home.js");
 const login = require("./routes/login.js");
 const users = require("./routes/users.js");
+const info = require("./routes/info.js");
 
 function authenticationMiddleware(req, res, next){
   if(req.isAuthenticated() == true){
@@ -38,9 +39,15 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
+
+app.get("/", async(req, res)=>{
+  res.redirect("/login")
+});
+
 app.use("/login", login);
 app.use("/home", authenticationMiddleware, home);
-app.use("/usuarios", authenticationMiddleware, users)
+app.use("/usuarios", authenticationMiddleware, users);
+app.use("/informacoes", authenticationMiddleware, info)
 
 
 app.listen(process.env.PORT, function () {
