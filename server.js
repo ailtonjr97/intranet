@@ -10,6 +10,7 @@ const users = require("./routes/users.js");
 const info = require("./routes/info.js");
 const comercial = require("./routes/comercial.js");
 const financeiro = require("./routes/financeiro.js");
+const logistica = require("./routes/logistica.js");
 
 function authenticationMiddleware(req, res, next){
   if(req.isAuthenticated() == true){
@@ -52,6 +53,7 @@ app.use("/usuarios", authenticationMiddleware, users);
 app.use("/informacoes", authenticationMiddleware, info);
 app.use("/comercial", authenticationMiddleware, comercial);
 app.use("/financeiro", authenticationMiddleware, financeiro);
+app.use("/logistica", authenticationMiddleware, logistica);
 
 
 app.listen(process.env.PORT, function () {
