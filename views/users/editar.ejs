@@ -32,8 +32,16 @@
                         </div>
                         <div class="form-floating" style="min-width: 15%;">
                             <select class="form-select" id="admin" name="admin">
-                              <option value="0" selected>Não</option>
-                              <option value="1">Sim</option>
+                                <%if(user.admin == 1){%>
+                                    <option value="<%=user.admin%>">Sim</option>
+                                <%}else{%>
+                                    <option value="<%=user.admin%>">Não</option>
+                                <%}%>
+                                <%if(user.admin == 1){%>
+                                    <option value="0">Não</option>
+                                <%}else{%>
+                                <option value="1">Sim</option>
+                                <%}%>
                             </select>
                             <label for="admin">Admin?</label>
                         </div>
