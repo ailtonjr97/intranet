@@ -7,10 +7,33 @@ const home = async(req, res)=>{
 
 const produtos = async(req, res)=>{
     try {
-        const api = await axios.get(process.env.APIKRONOS + "/sb1/consultar", {auth: {username: "admin", password: process.env.SENHAKRONOS}})
         res.render('logistica/produtos', {
-            results: api.data.length,
-            apis: api.data
+            results: await db.countProdutos(),
+            produtos: await db.selectProdutos()
+        });
+    } catch (error) {
+        console.log(error)
+        res.render('error')
+    };
+}
+
+const atualizarSB1 = async(req, res)=>{
+    try {
+        const limitador = await axios.get(process.env.APITOTVS + "CONSULTA_PRO/get_all", {auth: {username: "admin", password: process.env.SENHAPITOTVS}})
+        const response = await axios.get(process.env.APITOTVS + "CONSULTA_PRO/get_all?limit=" + limitador.data.meta.total, {auth: {username: "admin", password: process.env.SENHAPITOTVS}})
+        await db.insertProdutos(response.data.objects)
+        res.redirect('/logistica/produtos')
+    } catch (error) {
+        res.render('error')
+        console.log(error)
+    }
+}
+
+const detalhes = async(req, res)=>{
+    try {
+        let produto = await db.selectProduto(req.params.id)
+        res.render('logistica/detalhes', {
+            produto: produto
         })
     } catch (error) {
         console.log(error)
@@ -18,18 +41,21 @@ const produtos = async(req, res)=>{
     }
 }
 
-const atualizarSB1 = async(req, res)=>{
+const sql = async (req, res)=>{
     try {
-        await axios.get(process.env.APIKRONOS + "/sb1/atualizar", {auth: {username: "admin", password: process.env.SENHAKRONOS}})
-        res.redirect('/logistica/produtos')
+        const limitador = await axios.get(process.env.APITOTVS + "CONSULTA_PRO/get_all", {auth: {username: "admin", password: process.env.SENHAPITOTVS}})
+        const response = await axios.get(process.env.APITOTVS + "CONSULTA_PRO/get_all?limit=" + limitador.data.meta.total, {auth: {username: "admin", password: process.env.SENHAPITOTVS}})
+        await db.sql(response.data.objects)
+        res.redirect('/home')
     } catch (error) {
         console.log(error)
-        res.render('error')
     }
 }
 
 module.exports = {
     home,
     produtos,
-    atualizarSB1
+    atualizarSB1,
+    detalhes,
+    sql
 };

@@ -1,0 +1,60 @@
+<%- include('../partials/sidebar') %>
+
+
+
+<html>
+    <body>
+        <main>
+            <div class="row mt-4">
+                <div class="col-sm-1">
+                    <div class="form-floating mb-3">
+                        <input type="number" class="form-control" id="id" placeholder="<%=produto.id%>" value="<%=produto.id%>" readonly>
+                        <label for="id">ID:</label>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-floating mb-3 margen">
+                        <input type="text" class="form-control" id="descri" placeholder="<%=produto.descri%>" value="<%=produto.descri%>" readonly>
+                        <label for="descri">Descrição:</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col d-flex justify-content-evenly">
+                    <div class="form-floating mb-3 margen">
+                        <input type="text" class="form-control" id="cod" placeholder="<%=produto.cod%>" value="<%=produto.cod%>" readonly>
+                        <label for="cod">Código:</label>
+                    </div>
+                    <div class="form-floating mb-3 margen">
+                        <input type="text" class="form-control" id="tipo" placeholder="<%=produto.tipo%>" value="<%=produto.tipo%>" readonly>
+                        <label for="tipo">Tipo:</label>
+                    </div>
+                    <div class="form-floating mb-3 margen">
+                        <input type="text" class="form-control" id="um" placeholder="<%=produto.um%>" value="<%=produto.um%>" readonly>
+                        <label for="um">Unidade:</label>
+                    </div>
+                    <div class="form-floating mb-3 margen">
+                        <input type="text" class="form-control" id="grupo" placeholder="<%=produto.grupo%>" value="<%=produto.grupo%>" readonly>
+                        <label for="grupo">Grupo:</label>
+                    </div>
+                    <div class="form-floating mb-3 margen">
+                        <input type="Number" class="form-control" id="peso" placeholder="<%=produto.peso%>" value="<%=produto.peso%>" readonly>
+                        <label for="peso">Peso:</label>
+                    </div>
+                    <div class="form-floating mb-3 margen">
+                        <input type="Number" class="form-control" id="pesbru" placeholder="<%=produto.pesbru%>" value="<%=produto.pesbru%>" readonly>
+                        <label for="pesbru">Peso bruto:</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col d-flex justify-content-evenly">
+                    <div class="form-floating mb-3 margen">
+                        <input type="text" class="form-control" id="urev" placeholder="<%=produto.urev%>" value="<%=produto.urev%>" readonly>
+                        <label for="urev">Última revisão:</label>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </body>
+</html>

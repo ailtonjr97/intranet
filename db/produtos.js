@@ -13,16 +13,45 @@ async function connect(){
 
 connect();
 
-let insertProduto = async(produtos)=>{
+let selectProdutos = async()=>{
     const conn = await connect();
-    let values = []
+    const [rows] = await conn.query('SELECT * FROM produtos');
+    return rows;
+}
+
+let selectProduto = async(produto)=>{
+    const conn = await connect();
+    const [rows] = await conn.query('SELECT * FROM produtos WHERE id = ?', produto);
+    return rows[0];
+}
+
+let countProdutos = async()=>{
+    const conn = await connect();
+    const [rows] = await conn.query('SELECT COUNT(*) AS contagem_produtos FROM produtos');
+    return rows[0].contagem_produtos;
+}
+
+
+let insertProdutos = async(produtos)=>{
+    const conn = await connect();
+
+    await conn.query("TRUNCATE produtos");
+
+    let values = [];
+
     produtos.forEach(produto => {
-        conn.query('INSERT INTO produtos (cod, tipo, um, grupo, peso, urev, descri, pesbru) VALUES (?, ?, ?, ?, ?, ?, ?, ?)', [
-            produto.cod, produto.tipo, produto.um, produto.grupo, produto.peso, produto.urev, produto.desc, produto.pesbru
-        ])
+        values.push([produto.cod, produto.tipo, produto.um, produto.grupo, produto.peso, produto.urev, produto.desc, produto.pesbru]) 
+    });
+
+    await conn.query("INSERT INTO produtos (cod, tipo, um, grupo, peso, urev, descri, pesbru) VALUES ?", [values], function(err) {
+        if (err) throw err;
+    conn.end();
     });
 }
 
 module.exports = {
-    insertProduto
+    selectProdutos,
+    countProdutos,
+    insertProdutos,
+    selectProduto
 };

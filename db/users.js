@@ -83,5 +83,5 @@ module.exports = {
     inactivateUser,
     activateUser,
     editarUser,
-    changePassword
+    changePassword,
 };

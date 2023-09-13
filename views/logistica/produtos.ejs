@@ -57,22 +57,28 @@
             <th>Tipo</th>
             <th>Unidade</th>
             <th>Descrição</th>
+            <th>Ações</th>
           </tr>
         </thead>
         <tbody>
-          <%apis.forEach ((api)=>{%>
+          <%produtos.forEach ((produto)=>{%>
           <tr>
             <td>
-                <p><%=api.cod%></p>
+                <p><%=produto.cod%></p>
             </td>
             <td>
-              <p><%=api.tipo%></p>
+              <p><%=produto.tipo%></p>
             </td>
             <td>
-                <p><%=api.um%></p>
+                <p><%=produto.um%></p>
             </td>
             <td>
-                <p><%=api.desc%></p>
+                <p><%=produto.descri%></p>
+            </td>
+            <td>
+              <a href="/logistica/produtos/detalhes/<%=produto.id%>">
+                <button type="button" class="button-8">Detalhes</button>
+              </a>
             </td>
           </tr>
           <%})%>
