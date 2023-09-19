@@ -1,0 +1,73 @@
+<%- include('../partials/sidebar') %>
+<link rel="stylesheet" href="/css/table.css" />
+<link rel="stylesheet" href="/css/button8.css" />
+<link rel="stylesheet" href="/css/loading.css" />
+
+
+<div id="loading"></div>
+
+
+    <div class="row mt-2">
+      <div class="col-md-4">
+        <h4>Clientes</h4>
+      </div>
+      <div class="col-lg-4">
+      </div>
+      <div class="col-md-4">
+        <button type="button" class="button-8 mb-2" id="result" style="float: right;">
+          <span class="counter-value"><%=results%></span>
+          resultados
+        </button>
+        <a href="/faturamento/atualizarSA1">
+          <button type="button" class="button-8" id="result" style="float: right; margin-right: 3%;">Atualizar tabela</button>
+        </a>
+      </div>
+    </div>
+    <div class="row mb-3">
+      <div class="col">
+        <div class="form-floating">
+          <input type="text" class="form-control" id="procuraBtn0" onkeyup="procura(0, 'procuraBtn0')"/>
+          <label for="procuraBtn0">Código:</label>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-floating">
+          <input type="text" class="form-control" id="procuraBtn1" onkeyup="procura(1, 'procuraBtn1')"/>
+          <label for="procuraBtn1">Nome:</label>
+        </div>
+      </div>
+    </div>
+    <div class="table-wrapper table-responsive table-striped mb-4">
+      <table class="fl-table" id="myTable">
+        <thead>
+          <tr style="height: 25px">
+            <th>Código</th>
+            <th>Nome</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          <%contents.forEach ((content)=>{%>
+          <tr>
+            <td>
+                <p><%=content.cod%></p>
+            </td>
+            <td>
+              <p><%=content.nome%></p>
+            </td>
+            <td>
+              <a href="/faturamento/clientes/detalhes/<%=content.id%>">
+                <button type="button" class="button-8">Detalhes</button>
+              </a>
+            </td>
+          </tr>
+          <%})%>
+        </tbody>
+        <tbody></tbody>
+      </table>
+    </div>
+
+
+<script type="text/javascript" src="/js/carregador.js"></script>
+<script type="text/javascript" src="/js/confirmation.js"></script>
+<script type="text/javascript" src="/js/procura.js"></script>

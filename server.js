@@ -9,7 +9,7 @@ const login = require("./routes/login.js");
 const users = require("./routes/users.js");
 const info = require("./routes/info.js");
 const comercial = require("./routes/comercial.js");
-const financeiro = require("./routes/financeiro.js");
+const faturamento = require("./routes/faturamento.js");
 const logistica = require("./routes/logistica.js");
 
 function authenticationMiddleware(req, res, next){
@@ -52,7 +52,7 @@ app.use("/home", authenticationMiddleware, home);
 app.use("/usuarios", authenticationMiddleware, users);
 app.use("/informacoes", authenticationMiddleware, info);
 app.use("/comercial", authenticationMiddleware, comercial);
-app.use("/financeiro", authenticationMiddleware, financeiro);
+app.use("/faturamento", authenticationMiddleware, faturamento);
 app.use("/logistica", authenticationMiddleware, logistica);
 
 
