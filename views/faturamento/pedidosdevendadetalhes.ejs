@@ -1,0 +1,50 @@
+<%- include('../partials/sidebar') %>
+
+<head>
+    <link rel="stylesheet" href="/css/table.css" />
+</head>
+
+<body>
+    <div class="row mt-2">
+        <h1 style="color: black;">Detalhes do pedido <%=pedido.num%></h1>
+    </div>
+    <div class="row mt-2">
+        <div class="col-sm-1">
+            <div class="form-floating">
+                <input type="text" class="form-control" id="id" placeholder="id" value="<%=pedido.num%>">
+                <label for="id">ID:</label>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-floating">
+                <input type="text" class="form-control" id="codcli" placeholder="Código cliente" value="<%=pedido.cliente%>">
+                <label for="codcli">Código cliente:</label>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="table-wrapper table-responsive table-striped mb-4">
+            <table class="fl-table" id="myTable">
+              <thead>
+                <tr style="height: 25px">
+                  <th>Código produto</th>
+                  <th>Descritivo</th>
+                </tr>
+              </thead>
+              <tbody>
+                <%itens.forEach ((iten)=>{%>
+                <tr>
+                  <td>
+                      <p><%=iten.produto%></p>
+                  </td>
+                  <td>
+                    <p><%=iten.descritivo%></p>
+                  </td>
+                </tr>
+                <%})%>
+              </tbody>
+              <tbody></tbody>
+            </table>
+          </div>
+    </div>
+</body>

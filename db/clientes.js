@@ -6,35 +6,48 @@ async function connect(){
         return global.connection;
 
     const mysql = require("mysql2/promise");
-    const connection = await mysql.createConnection(process.env.SQLCONNECTION);
-    global.connection = connection;
-    return connection;
+    const pool = mysql.createPool({
+        host: '192.168.0.85',
+        port: '3306',
+        user: 'intranet_totvs',
+        password: 'Lambari171',
+        database: 'INTRANET_TOTVS',
+        waitForConnections: true,
+        connectionLimit: 10,
+        maxIdle: 10, // max idle connections, the default value is the same as `connectionLimit`
+        idleTimeout: 60000, // idle connections timeout, in milliseconds, the default value 60000
+        queueLimit: 0,
+        enableKeepAlive: true,
+        keepAliveInitialDelay: 10000
+      });
+    global.connection = pool;
+    return pool;
 }
 
 connect();
 
 let selectClientes = async()=>{
     const conn = await connect();
-    const [rows] = await conn.query('SELECT * FROM clientes');
+    const [rows] = await conn.query('SELECT * FROM sa1_clientes');
     return rows;
 }
 
 let selectCliente = async(id)=>{
     const conn = await connect();
-    const [rows] = await conn.query('SELECT * FROM clientes WHERE id = ?', id);
+    const [rows] = await conn.query('SELECT * FROM sa1_clientes WHERE id = ?', id);
     return rows[0];
 }
 
 let countClientes = async()=>{
     const conn = await connect();
-    const [rows] = await conn.query('SELECT COUNT(*) AS contagem_clientes FROM clientes');
+    const [rows] = await conn.query('SELECT COUNT(*) AS contagem_clientes FROM sa1_clientes');
     return rows[0].contagem_clientes;
 }
 
 let insertClientes = async(clientes)=>{
     const conn = await connect();
 
-    await conn.query("TRUNCATE clientes");
+    await conn.query("TRUNCATE sa1_clientes");
 
     let values = [];
 
@@ -58,9 +71,8 @@ let insertClientes = async(clientes)=>{
         ]) 
     });
 
-    await conn.query("INSERT INTO clientes (cod, nome, cod_mun, mun, nreduz, grpven, loja, endereco, codpais, est, cep, tipo, cgc, filial, xcartei) VALUES ?", [values], function(err) {
+    await conn.query("INSERT INTO sa1_clientes (cod, nome, cod_mun, mun, nreduz, grpven, loja, endereco, codpais, est, cep, tipo, cgc, filial, xcartei) VALUES ?", [values], function(err) {
         if (err) throw err;
-    conn.end();
     });
 }
 

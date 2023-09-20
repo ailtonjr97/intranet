@@ -6,28 +6,41 @@ async function connect(){
         return global.connection;
 
     const mysql = require("mysql2/promise");
-    const connection = await mysql.createConnection(process.env.SQLCONNECTION);
-    global.connection = connection;
-    return connection;
+    const pool = mysql.createPool({
+        host: '192.168.0.85',
+        port: '3306',
+        user: 'intranet_totvs',
+        password: 'Lambari171',
+        database: 'INTRANET_TOTVS',
+        waitForConnections: true,
+        connectionLimit: 10,
+        maxIdle: 10, // max idle connections, the default value is the same as `connectionLimit`
+        idleTimeout: 60000, // idle connections timeout, in milliseconds, the default value 60000
+        queueLimit: 0,
+        enableKeepAlive: true,
+        keepAliveInitialDelay: 10000
+      });
+    global.connection = pool;
+    return pool;
 }
 
 connect();
 
 let selectProdutos = async()=>{
     const conn = await connect();
-    const [rows] = await conn.query('SELECT * FROM produtos');
+    const [rows] = await conn.query('SELECT * FROM sb1_produtos');
     return rows;
 }
 
 let selectProduto = async(produto)=>{
     const conn = await connect();
-    const [rows] = await conn.query('SELECT * FROM produtos WHERE id = ?', produto);
+    const [rows] = await conn.query('SELECT * FROM sb1_produtos WHERE id = ?', produto);
     return rows[0];
 }
 
 let countProdutos = async()=>{
     const conn = await connect();
-    const [rows] = await conn.query('SELECT COUNT(*) AS contagem_produtos FROM produtos');
+    const [rows] = await conn.query('SELECT COUNT(*) AS contagem_produtos FROM sb1_produtos');
     return rows[0].contagem_produtos;
 }
 
@@ -35,7 +48,7 @@ let countProdutos = async()=>{
 let insertProdutos = async(produtos)=>{
     const conn = await connect();
 
-    await conn.query("TRUNCATE produtos");
+    await conn.query("TRUNCATE sb1_produtos");
 
     let values = [];
 
@@ -43,9 +56,8 @@ let insertProdutos = async(produtos)=>{
         values.push([produto.cod, produto.tipo, produto.um, produto.grupo, produto.peso, produto.urev, produto.desc, produto.pesbru]) 
     });
 
-    await conn.query("INSERT INTO produtos (cod, tipo, um, grupo, peso, urev, descri, pesbru) VALUES ?", [values], function(err) {
+    await conn.query("INSERT INTO sb1_produtos (cod, tipo, um, grupo, peso, urev, descri, pesbru) VALUES ?", [values], function(err) {
         if (err) throw err;
-    conn.end();
     });
 }
 

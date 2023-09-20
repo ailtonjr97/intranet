@@ -6,9 +6,22 @@ async function connect(){
         return global.connection;
 
     const mysql = require("mysql2/promise");
-    const connection = await mysql.createConnection(process.env.SQLCONNECTION);
-    global.connection = connection;
-    return connection;
+    const pool = mysql.createPool({
+        host: '192.168.0.85',
+        port: '3306',
+        user: 'intranet_totvs',
+        password: 'Lambari171',
+        database: 'INTRANET_TOTVS',
+        waitForConnections: true,
+        connectionLimit: 10,
+        maxIdle: 10, // max idle connections, the default value is the same as `connectionLimit`
+        idleTimeout: 60000, // idle connections timeout, in milliseconds, the default value 60000
+        queueLimit: 0,
+        enableKeepAlive: true,
+        keepAliveInitialDelay: 10000
+      });
+    global.connection = pool;
+    return pool;
 }
 
 connect();
