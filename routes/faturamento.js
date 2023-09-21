@@ -21,10 +21,10 @@ router.get("/grupos-de-venda", gruposDeVenda);
 
 router.get("/clientes", clientes);
 router.get("/atualizarSA1", atualizarSA1);
-router.get("clientes/detalhes/:id", detalhes);
+router.get("/clientes/detalhes/:id", detalhes);
 
 router.get("/pedidosdevenda", pedidosDeVenda);
 router.get("/atualizarSC5", atualizarSC5);
-router.get("/pedidosdevenda/detalhes/:id", pedidosDeVendaDetalhes);
+router.get("/pedidosdevenda/detalhes/:id/:filial", pedidosDeVendaDetalhes);
 
 module.exports = router;

@@ -108,8 +108,8 @@ const atualizarSC5 = async(req, res)=>{
 const pedidosDeVendaDetalhes = async(req, res)=>{
     try {
         res.render('faturamento/pedidosdevendadetalhes', {
-            pedido: await pvdb.selectPedidoDeVenda(req.params.id),
-            itens: await pvdb.selectPedidosMaisItens(req.params.id)
+            pedido: await pvdb.selectPedidoDeVenda(req.params.id, req.params.filial),
+            itens: await pvdb.selectPedidosMaisItens(req.params.id, req.params.filial)
         });
     } catch (error) {
         console.log(error)

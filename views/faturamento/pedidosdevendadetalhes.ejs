@@ -9,36 +9,161 @@
         <h1 style="color: black;">Detalhes do pedido <%=pedido.num%></h1>
     </div>
     <div class="row mt-2">
-        <div class="col-sm-1">
-            <div class="form-floating">
-                <input type="text" class="form-control" id="id" placeholder="id" value="<%=pedido.num%>">
-                <label for="id">ID:</label>
-            </div>
+      <div class="col-sm-1">
+        <div class="form-floating">
+          <input type="text" class="form-control" id="id" placeholder="id" value="<%=pedido.num%>" readonly>
+          <label for="id">ID:</label>
+      </div>
+      </div>
+      <div class="col-sm-2">
+          <div class="form-floating">
+            <input type="text" class="form-control" id="cliente" value="<%=pedido.cliente%>" readonly>
+            <label for="cliente">Código cliente:</label>
+          </div>
+      </div>
+      <div class="col">
+          <div class="form-floating">
+            <input type="text" class="form-control" id="nome" value="<%=pedido.nome%>" readonly>
+            <label for="nome">Nome cliente:</label>
+          </div>
+      </div>
+    </div>
+    <div class="row mt-2">
+      <div class="col">
+        <div class="form-floating">
+          <input type="text" class="form-control" id="nota" value="<%=pedido.nota%>" readonly>
+          <label for="nota">Nota:</label>
         </div>
-        <div class="col">
-            <div class="form-floating">
-                <input type="text" class="form-control" id="codcli" placeholder="Código cliente" value="<%=pedido.cliente%>">
-                <label for="codcli">Código cliente:</label>
-            </div>
+      </div>
+      <div class="col">
+        <div class="form-floating">
+          <input type="text" class="form-control" id="tpfrete" value="<%=pedido.tpfrete%>" readonly>
+          <label for="tpfrete">Tipo frete:</label>
         </div>
+      </div>
+      <div class="col">
+        <div class="form-floating">
+          <input type="text" class="form-control" id="condpag" value="<%=pedido.condpag%>" readonly>
+          <label for="condpag">Condição de pagamento:</label>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-floating">
+          <input type="text" class="form-control" id="tipocli" value="<%=pedido.tipocli%>" readonly>
+          <label for="tipocli">Tipo cliente:</label>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-floating">
+          <input type="text" class="form-control" id="blq" value="<%=pedido.blq%>" readonly>
+          <label for="blq">Bloqueio regras:</label>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-floating">
+          <input type="text" class="form-control" id="liberok" value="<%=pedido.liberok%>" readonly>
+          <label for="liberok">Liberado total:</label>
+        </div>
+      </div>
+    </div>
+    <div class="row mt-2">
+      <div class="col">
+        <div class="form-floating">
+          <input type="text" class="form-control" id="lojacli" value="<%=pedido.lojacli%>" readonly>
+          <label for="lojacli">Loja cliente:</label>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-floating">
+          <input type="text" class="form-control" id="vend1" value="<%=pedido.vend1%>" readonly>
+          <label for="vend1">Vendedor 1:</label>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-floating">
+          <input type="text" class="form-control" id="tipo" value="<%=pedido.tipo%>" readonly>
+          <label for="tipo">Tipo:</label>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-floating">
+          <%var emi = new Date(pedido.emissao)%>
+          <input type="text" class="form-control" id="emissao" value="<%=emi.toLocaleDateString('pt-BR')%>" readonly>
+          <label for="emissao">Emissão:</label>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-floating">
+          <input type="text" class="form-control" id="xflagtr" value="<%=pedido.xflagtr%>" readonly>
+          <label for="xflagtr">Xflagtr:</label>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-floating">
+          <input type="text" class="form-control" id="filial" value="<%=pedido.filial_sc5%>" readonly>
+          <label for="filial">Filial:</label>
+        </div>
+      </div>
+    </div>
+    <div class="row mt-2">
+      <div class="col">
+        <div class="form-floating">
+          <input type="text" class="form-control" id="xpedtr" value="<%=pedido.xpedtr%>" readonly>
+          <label for="xpedtr">xpedtr:</label>
+        </div>
+      </div>
     </div>
     <div class="row mt-4">
         <div class="table-wrapper table-responsive table-striped mb-4">
             <table class="fl-table" id="myTable">
               <thead>
                 <tr style="height: 25px">
+                  <th>ID</th>
                   <th>Código produto</th>
                   <th>Descritivo</th>
+                  <th>Quantidade venda</th>
+                  <th>Quantidade entrada</th>
+                  <th>Preço unitário</th>
+                  <th>Preço total</th>
+                  <th>Desconto</th>
+                  <th>Data entrega</th>
+                  <th>Data faturamento</th>
                 </tr>
               </thead>
               <tbody>
-                <%itens.forEach ((iten)=>{%>
+                <%itens.forEach ((item)=>{%>
                 <tr>
                   <td>
-                      <p><%=iten.produto%></p>
+                    <p><%=item.item%></p>
                   </td>
                   <td>
-                    <p><%=iten.descritivo%></p>
+                    <p><%=item.produto%></p>
+                  </td>
+                  <td>
+                    <p><%=item.descri%></p>
+                  </td>
+                  <td>
+                    <p><%=item.qtdven%></p>
+                  </td>
+                  <td>
+                    <p><%=item.qtdent%></p>
+                  </td>
+                  <td>
+                    <p>R$ <%=item.prcven%></p>
+                  </td>
+                  <td>
+                    <p>R$ <%=item.valor%></p>
+                  </td>
+                  <td>
+                    <p><%=item.descont%></p>
+                  </td>
+                  <td>
+                    <%var ent = new Date(item.entreg)%>
+                    <p><%=ent.toLocaleDateString("pt-BR")%></p>
+                  </td>
+                  <td>
+                    <%var fat = new Date(item.datfat)%>
+                    <p><%=fat.toLocaleDateString("pt-BR")%></p>
                   </td>
                 </tr>
                 <%})%>

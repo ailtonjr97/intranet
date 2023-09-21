@@ -2,6 +2,7 @@ const express = require("express");
 const dotenv = require("dotenv");
 const bodyParser = require("body-parser");
 const passport = require("passport");
+const jwt = require("jsonwebtoken");
 const session = require("express-session");
 require('./auth.js')(passport);
 const home = require("./routes/home.js");
@@ -52,8 +53,42 @@ app.use("/home", authenticationMiddleware, home);
 app.use("/usuarios", authenticationMiddleware, users);
 app.use("/informacoes", authenticationMiddleware, info);
 app.use("/comercial", authenticationMiddleware, comercial);
-app.use("/faturamento", authenticationMiddleware, faturamento);
+app.use("/faturamento", faturamento);
 app.use("/logistica", authenticationMiddleware, logistica);
+
+function verifyJWT(req, res, next){
+  const token = req.headers['x-access-token'];
+  const index = blacklist.findIndex(token);
+  if(index !== -1) return res.status(401).end('Finalizado 1'); 
+  jwt.verify(token, process.env.JWTSECRET, (err, decoded)=>{
+    if(err) return res.status(401).end('não permitido');
+
+    req.userId = decoded.userId
+    next();
+  })
+}
+
+
+app.post('/loginjwt', (req, res)=>{
+    if(req.body.user === 'ailton' && req.body.password == '123'){
+      const token = jwt.sign({userId: 1}, process.env.JWTSECRET, {expiresIn: 300})
+      return res.json({auth: true, token});
+    }
+})
+
+app.get('/rotaautenticada', verifyJWT, (req, res)=>{
+  res.send('rota autenticada acessada')
+})
+
+app.get('/rotalivre', (req, res)=>{
+  res.send('rota liberada')
+})
+
+const blacklist = [];
+app.post('jwtlogout', (req, res)=>{
+  blacklist.push(req.headers['x-access-token'])
+  res.send('deslogado')
+})
 
 
 app.listen(process.env.PORT, function () {

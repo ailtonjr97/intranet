@@ -1,12 +1,85 @@
 <%- include('../partials/sidebar') %>
 
 <body>
+    <div class="row mt-3">
+        <h1>Detalhes do cliente <%=details.nreduz%></h1>
+    </div>
+    <div class="row mt-2">
+        <div class="col-sm-2">
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="cod" value="<%=details.cod%>" readonly>
+                <label for="cod">Código:</label>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="nome" value="<%=details.nome%>" readonly>
+                <label for="nome">Nome completo:</label>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col d-flex justify-content-between">
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="cod_mun" value="<%=details.cod_mun%>" readonly>
+                <label for="cod_mun">Código municipal:</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="mun" value="<%=details.mun%>" readonly>
+                <label for="mun">Município:</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="nreduz" value="<%=details.nreduz%>" readonly>
+                <label for="nreduz">Nome reduzido:</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="grpven" value="<%=details.grpven%>" readonly>
+                <label for="grpven">Grupo de venda:</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="loja" value="<%=details.loja%>" readonly>
+                <label for="loja">Loja:</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="codpais" value="<%=details.codpais%>" readonly>
+                <label for="codpais">Código país:</label>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col d-flex justify-content-between">
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="end" value="<%=details.endereco%>" readonly>
+                <label for="end">Endereço:</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="est" value="<%=details.est%>" readonly>
+                <label for="est">Estado:</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="cep" value="<%=details.cep%>" readonly>
+                <label for="cep">CEP:</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="tipo" value="<%=details.tipo%>" readonly>
+                <label for="tipo">Tipo:</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="cgc" value="<%=details.cgc%>" readonly>
+                <label for="cgc">CGC:</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="filial" value="<%=details.filial%>" readonly>
+                <label for="filial">Filial:</label>
+            </div>
+        </div>
+    </div>
     <div class="row">
         <div class="col">
             <div class="form-floating mb-3">
-                <input type="number" class="form-control" id="floatingInput" placeholder="name@example.com" value="<%=details.id%>">
-                <label for="floatingInput">ID:</label>
-              </div>
+                <input type="text" class="form-control" id="xcartei" value="<%=details.xcartei%>" readonly>
+                <label for="xcartei">Carteira:</label>
+            </div>
         </div>
     </div>
 </body>

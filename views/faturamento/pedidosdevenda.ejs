@@ -36,6 +36,12 @@
           <label for="procuraBtn1">Cliente:</label>
         </div>
       </div>
+      <div class="col">
+        <div class="form-floating">
+          <input type="text" class="form-control" id="procuraBtn2" onkeyup="procura(2, 'procuraBtn2')"/>
+          <label for="procuraBtn2">Filial:</label>
+        </div>
+      </div>
     </div>
     <div class="table-wrapper table-responsive table-striped mb-4">
       <table class="fl-table" id="myTable">
@@ -43,6 +49,7 @@
           <tr style="height: 25px">
             <th>Número do pedido</th>
             <th>Cliente</th>
+            <th>Filial</th>
             <th>Ações</th>
           </tr>
         </thead>
@@ -56,7 +63,10 @@
               <p><%=content.cliente%></p>
             </td>
             <td>
-              <a href="/faturamento/pedidosdevenda/detalhes/<%=content.num%>">
+              <p><%=content.filial%></p>
+            </td>
+            <td>
+              <a href="/faturamento/pedidosdevenda/detalhes/<%=content.num%>/<%=content.filial%>">
                 <button type="button" class="button-8">Detalhes</button>
               </a>
             </td>

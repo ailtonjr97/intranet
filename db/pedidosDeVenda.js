@@ -28,13 +28,13 @@ connect();
 
 let selectPedidosDeVenda = async()=>{
     const conn = await connect();
-    const [rows] = await conn.query('SELECT * FROM sc5_pedidosdevenda');
+    const [rows] = await conn.query('SELECT * FROM sc5_pedidosdevenda order by num desc');
     return rows;
 }
 
-let selectPedidoDeVenda = async(num)=>{
+let selectPedidoDeVenda = async(id, filial)=>{
     const conn = await connect();
-    const [rows] = await conn.query('SELECT * FROM sc5_pedidosdevenda WHERE num = ?', num);
+    const [rows] = await conn.query('SELECT *, sc5.filial as "filial_sc5" FROM sc5_pedidosdevenda as sc5 INNER JOIN sa1_clientes as sa1 on sc5.cliente = sa1.cod WHERE sc5.num = ? and sc5.filial = ?', [id, filial]);
     return rows[0];
 }
 
@@ -112,9 +112,9 @@ let insertItensPedidoDeVenda = async(results)=>{
     });
 }
 
-let selectPedidosMaisItens = async(num)=>{
+let selectPedidosMaisItens = async(id, filial)=>{
     const conn = await connect();
-    const [rows] = await conn.query("select sc6.produto as 'produto', sb1.descri 'descritivo' from sc6_itenspedidodevenda sc6 inner join sc5_pedidosdevenda as sc5 on sc6.num = sc5.num inner join sb1_produtos as sb1 on sc6.produto = sb1.cod where sc5.num = ?", num);
+    const [rows] = await conn.query("select * from sc6_itenspedidodevenda sc6 inner join sb1_produtos as sb1 on sc6.produto = sb1.cod where sc6.num = ? and sc6.filial = ? order by item asc", [id, filial]);
     return rows;
 }
 
