@@ -1,12 +1,16 @@
 const db = require('../db/users.js')
 const bcrypt = require('bcryptjs');
+const express = require("express");
+const cookieParser = require("cookie-parser");
+
+const app = express();
+app.use(cookieParser())
 
 let users = async(req, res)=>{
     try {
         res.render('users/users.ejs', {
             users: await db.users(),
             results: await db.countUsers(),
-            logged: req.user
         })
     } catch (error) {
         console.log(error)
@@ -39,9 +43,8 @@ let createUser = async (req, res)=>{
 }
 
 const logout = async(req, res)=>{
-    req.logout(()=>{
-        res.redirect("/login");
-    });
+    res.cookie('jwt', '', {maxAge: 1})
+    res.redirect("/login");
 }
 
 const inativos = async(req, res)=>{

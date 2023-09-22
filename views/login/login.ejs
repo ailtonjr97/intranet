@@ -126,7 +126,7 @@ button{
 
         <div class="row">
           <div class="col">
-            <p style="text-align: center; margin-top: 5%;">Erro ao autenticar usuário</p>
+            <p style="text-align: center; margin-top: 5%;">Erro ao autenticar usuário ou sessão expirada.</p>
           </div>
         </div>
 
@@ -135,7 +135,7 @@ button{
 </body>
 <script>
   let params = new URLSearchParams(document.location.search);
-  if(params.get("erro") == null){
+  if(!params.get("invalido")){
     document.getElementsByClassName('row')[0].style.display = 'none'
   }
 </script>
