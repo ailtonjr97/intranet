@@ -7,11 +7,11 @@ async function connect(){
 
     const mysql = require("mysql2/promise");
     const pool = mysql.createPool({
-        host: '192.168.0.85',
+        host: process.env.SQLHOST,
         port: '3306',
-        user: 'intranet_totvs',
-        password: 'Lambari171',
-        database: 'INTRANET_TOTVS',
+        user: process.env.SQLUSER,
+        password: process.env.SQLPASSWORD,
+        database: process.env.SQLDATABASE,
         waitForConnections: true,
         connectionLimit: 10,
         maxIdle: 10, // max idle connections, the default value is the same as `connectionLimit`
