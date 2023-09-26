@@ -46,12 +46,14 @@
                       Info
                     </span>
                   </a>
+                  <%if (user.admin == "1") {%>
                   <a href="/usuarios" class="nav_link">
                     <i class='bx bx-user nav_icon'></i>
                     <span class="nav_name">
                       Usuário
                     </span>
                   </a>
+                  <%}%>
                   <a href="/usuarios/logout" class="nav_link">
                     <i class='bx bx-log-out-circle nav_icon'></i>
                     <span class="nav_name">

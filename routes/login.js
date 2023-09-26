@@ -31,7 +31,7 @@ router.post("/autenticar", async(req, res)=>{
         
         if(isValid){
             const createToken = ()=>{
-                return jwt.sign({id: user.id}, process.env.JWTSECRET, {expiresIn: 180})
+                return jwt.sign({id: user.id, admin: user.admin}, process.env.JWTSECRET, {expiresIn: 1800})
             };
             const token = createToken()
             res.cookie('jwt', token, {httpOnly: true});

@@ -1,57 +1,26 @@
 <%- include('../partials/sidebar') %>
-<head>
-    <link rel="stylesheet" href="css/cardsSectors.css">
-</head>
+<link rel="stylesheet" href="/css/menu.css" />
 
-<style>
-    .card {
-        background-color: white;
-        border: none;
-    }
-
-    a{
-        color: inherit;
-    }
-</style>
 
 <html>
+
     <body>
-            <h2 class="mb-5 mt-2" style="text-align: center;">
-                Informações
-            </h2>
-            <div class="row">
-                <div class="col d-flex justify-content-around">
-                    <a href="/informations/branches" style="margin-left: 0;">
-                        <div class="card" style="width: 18rem;">
-                            <img class="card-img-top" src="https://cdn-icons-png.flaticon.com/512/6712/6712276.png" alt="Card image cap">
-                            <div class="card-body">
-                                <h5 class="card-title" style="text-align: center;">
-                                    Filiais
-                                </h5>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="/informations/departments">
-                        <div class="card" style="width: 18rem;">
-                            <img class="card-img-top" src="https://cdn-icons-png.flaticon.com/512/1642/1642054.png" alt="Card image cap">
-                            <div class="card-body">
-                                <h5 class="card-title" style="text-align: center;">
-                                    Setores
-                                </h5>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="/informations/warehouse">
-                        <div class="card" style="width: 18rem;">
-                            <img class="card-img-top" src="https://cdn-icons-png.flaticon.com/512/3773/3773184.png" alt="Card image cap">
-                            <div class="card-body">
-                                <h5 class="card-title" style="text-align: center;">
-                                    Armazéns
-                                </h5>
-                            </div>
-                        </div>
-                    </a>
-                </div>
+        <h2 class="mb-3 mt-4" style="text-align: center;">
+            Informações
+        </h2>
+        <div class="row">
+            <div class="col d-flex justify-content-start">
+                <a href="/informacoes/empresas">
+                    <div class="card">
+                        <h5>Empresas</h5>
+                    </div>
+                </a>
+                <a href="/informacoes/empresas">
+                    <div class="card">
+                        <h5>Filiais</h5>
+                    </div>
+                </a>
             </div>
+        </div>
     </body>
 </html>
