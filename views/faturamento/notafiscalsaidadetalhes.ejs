@@ -1,0 +1,132 @@
+<%- include('../partials/sidebar') %>
+
+<head>
+    <link rel="stylesheet" href="/css/table.css" />
+</head>
+
+<body>
+    <div class="row mt-2">
+        <h1 style="color: black;">Detalhes da NF de saída <%=nota.doc%></h1>
+    </div>
+    <div class="row mt-2">
+      <div class="col-sm-2">
+          <div class="form-floating">
+            <input type="text" class="form-control" id="cliente" value="<%=nota.cliente%>" readonly>
+            <label for="cliente">Código cliente:</label>
+          </div>
+      </div>
+      <div class="col">
+          <div class="form-floating">
+            <input type="text" class="form-control" id="nome" value="<%=nota.cliente%>" readonly>
+            <label for="nome">Nome cliente:</label>
+          </div>
+      </div>
+    </div>
+    <div class="row mt-2">
+      <div class="col-sm-2">
+        <div class="form-floating">
+          <input type="text" class="form-control" id="filial" value="<%=nota.filial%>" readonly>
+          <label for="filial">Filial:</label>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-floating">
+          <input type="text" class="form-control" id="chvnfe" value="<%=nota.chvnfe%>" readonly>
+          <label for="chvnfe">Chave NFE:</label>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-floating">
+          <input type="text" class="form-control" id="serie" value="<%=nota.serie%>" readonly>
+          <label for="serie">Série:</label>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-floating">
+          <input type="text" class="form-control" id="loja" value="<%=nota.loja%>" readonly>
+          <label for="loja">Loja:</label>
+        </div>
+      </div>
+    </div>
+    <div class="row mt-2">
+      <div class="col">
+        <div class="form-floating">
+          <input type="text" class="form-control" id="tipocli" value="<%=nota.tipocli%>" readonly>
+          <label for="tipocli">Tipo cliente:</label>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-floating">
+          <input type="text" class="form-control" id="vend1" value="<%=nota.vend1%>" readonly>
+          <label for="vend1">Vendedor 1:</label>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-floating">
+          <input type="text" class="form-control" id="fimp" value="<%=nota.fimp%>" readonly>
+          <label for="fimp">Flag de Impressão:</label>
+        </div>
+      </div>
+    </div>
+    <div class="row mt-4">
+        <div class="table-wrapper table-responsive table-striped mb-4">
+            <table class="fl-table" id="myTable">
+              <thead>
+                <tr style="height: 25px">
+                  <th>ID</th>
+                  <th>Código produto</th>
+                  <th>Descritivo</th>
+                  <th>Unidade</th>
+                  <th>Quantidade</th>
+                  <th>Preço Tabela</th>
+                  <th>Pedido</th>
+                  <th>Tipo NF</th>
+                  <th>Origem Lançamento</th>
+                  <th>Tipo saída</th>
+                  <th>Cod. fiscal operação</th>
+                </tr>
+              </thead>
+              <tbody>
+                <%itens.forEach((item)=>{%>
+                <tr>
+                    <td>
+                        <p><%=item.item%></p>
+                    </td>
+                    <td>
+                        <p><%=item.cod%></p>
+                    </td>
+                    <td>
+                        <p><%=item.descritivo%></p>
+                    </td>
+                    <td>
+                        <p><%=item.um%></p>
+                    </td>
+                    <td>
+                        <p><%=item.quant%></p>
+                    </td>
+                    <td>
+                        <p>R$ <%=item.prunit%></p>
+                    </td>
+                    <td>
+                        <p><%=item.pedido%></p>
+                    </td>
+                    <td>
+                        <p><%=item.sd2tipo%></p>
+                    </td>
+                    <td>
+                        <p><%=item.origlan%></p>
+                    </td>
+                    <td>
+                        <p><%=item.tes%></p>
+                    </td>
+                    <td>
+                        <p><%=item.cf%></p>
+                    </td>
+                </tr>
+                <%})%>
+              </tbody>
+              <tbody></tbody>
+            </table>
+          </div>
+    </div>
+</body>

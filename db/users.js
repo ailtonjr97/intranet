@@ -50,6 +50,12 @@ let getUserByUsername = async(username)=>{
     return rows[0];
 }
 
+let getUserByIntranetID = async(id)=>{
+    const conn = await connect();
+    const [rows] = await conn.query('SELECT * FROM users WHERE intranet_id = ?', id);
+    return rows[0];
+}
+
 let getUserById = async(id)=>{
     const conn = await connect();
     const [rows] = await conn.query('SELECT * FROM users WHERE id = ?', id);
@@ -97,4 +103,5 @@ module.exports = {
     activateUser,
     editarUser,
     changePassword,
+    getUserByIntranetID
 };

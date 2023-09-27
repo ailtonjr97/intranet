@@ -27,7 +27,7 @@ app.use(cookieParser())
 function authenticationMiddleware(req, res, next){
   const token = req.cookies.jwt;
   if(token){
-    jwt.verify(token, process.env.JWTSECRET, (err, decodedToken)=>{
+    jwt.verify(token, process.env.JWTSECRET, (err)=>{
       if(err){
         req.session.returnTo = req.originalUrl;
         res.redirect("/login?invalido=true");
@@ -50,7 +50,7 @@ const checkUser = (req, res, next)=>{
         res.locals.user = null;
         next();
       } else {
-        let user = await db.getUserById(decodedToken.id);
+        let user = await db.getUserByIntranetID(decodedToken.id);
         res.locals.user = user;
         next();
       }

@@ -1,6 +1,7 @@
 const axios = require('axios')
 const db = require('../db/clientes')
 const pvdb = require('../db/pedidosDeVenda')
+const nfs = require('../db/notafiscalsaida')
 
 const home = async(req, res)=>{
     res.render('faturamento/home')
@@ -117,6 +118,53 @@ const pedidosDeVendaDetalhes = async(req, res)=>{
     }
 }
 
+const notasFicalSaida = async(req, res)=>{
+    try {
+        res.render('faturamento/notasfiscaisdesaida', {
+            results: await nfs.countNotaFiscalSaida(),
+            contents: await nfs.selectNotasFiscalSaida()
+        })
+    } catch (error) {
+        console.log(error)
+        res.render('error')
+    }
+}
+
+const atualizarSF2 = async(req, res)=>{
+    try {
+        const [limitadorSD2, limitadorSF2] = await Promise.all([
+            axios.get(process.env.APITOTVS + "CONSULTA_SD2/get_all", {auth: {username: process.env.USERTOTVS , password: process.env.SENHAPITOTVS}}),
+            axios.get(process.env.APITOTVS + "CONSULTA_SF2/get_all", {auth: {username: process.env.USERTOTVS , password: process.env.SENHAPITOTVS}})
+        ])
+        
+        const [responseSD2, responseSF2] = await Promise.all([
+            axios.get(process.env.APITOTVS + "CONSULTA_SD2/get_all?limit=" + limitadorSD2.data.meta.total, {auth: {username: process.env.USERTOTVS, password: process.env.SENHAPITOTVS}}),
+            axios.get(process.env.APITOTVS + "CONSULTA_SF2/get_all?limit=" + limitadorSF2.data.meta.total, {auth: {username: process.env.USERTOTVS, password: process.env.SENHAPITOTVS}})
+        ])
+
+        await Promise.all([
+            nfs.insertNotaFiscalSaida(responseSF2.data.objects),
+            nfs.insertItensNotaFiscalSaida(responseSD2.data.objects)
+        ])
+        res.redirect('/faturamento/nota-fiscal-saida')
+    } catch (error) {
+        res.render('error')
+        console.log(error)
+    }
+}
+
+const notaFiscalSaidaDetalhes = async(req, res)=>{
+    try {
+        res.render('faturamento/notafiscalsaidadetalhes', {
+            nota: await nfs.selectNotaFiscalSaida(req.params.doc),
+            itens: await nfs.selectNFSsaidaItens(req.params.doc)
+        });
+    } catch (error) {
+        console.log(error)
+        res.render('error')
+    }
+}
+
 module.exports = {
     home,
     condPag,
@@ -126,5 +174,8 @@ module.exports = {
     detalhes,
     pedidosDeVenda,
     atualizarSC5,
-    pedidosDeVendaDetalhes
+    pedidosDeVendaDetalhes,
+    notasFicalSaida,
+    atualizarSF2,
+    notaFiscalSaidaDetalhes
 };

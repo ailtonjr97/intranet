@@ -9,16 +9,16 @@
 
     <div class="row mt-2">
       <div class="col-md-4">
-        <h4>Produtos</h4>
+        <h4>Notas Fiscais de Saída</h4>
       </div>
       <div class="col-lg-4">
       </div>
       <div class="col-md-4">
-        <button type="button" class="button-8 mb-2" id="result" style="float: right;" disabled>
+        <button type="button" class="button-8 mb-2" id="result" style="float: right;">
           <span class="counter-value"><%=results%></span>
           resultados
         </button>
-        <a href="/atualizarSB1">
+        <a href="/faturamento/atualizarSF2">
           <button type="button" class="button-8" id="result" style="float: right; margin-right: 3%;">Atualizar tabela</button>
         </a>
       </div>
@@ -27,25 +27,19 @@
       <div class="col">
         <div class="form-floating">
           <input type="text" class="form-control" id="procuraBtn0" onkeyup="procura(0, 'procuraBtn0')"/>
-          <label for="procuraBtn0">Código:</label>
+          <label for="procuraBtn0">Emissão:</label>
         </div>
       </div>
       <div class="col">
         <div class="form-floating">
           <input type="text" class="form-control" id="procuraBtn1" onkeyup="procura(1, 'procuraBtn1')"/>
-          <label for="procuraBtn1">Tipo:</label>
+          <label for="procuraBtn1">Documento:</label>
         </div>
       </div>
       <div class="col">
         <div class="form-floating">
           <input type="text" class="form-control" id="procuraBtn2" onkeyup="procura(2, 'procuraBtn2')"/>
-          <label for="procuraBtn2">Unidade:</label>
-        </div>
-      </div>
-      <div class="col">
-        <div class="form-floating">
-          <input type="text" class="form-control" id="procuraBtn3" onkeyup="procura(3, 'procuraBtn3')"/>
-          <label for="procuraBtn3">Descrição:</label>
+          <label for="procuraBtn2">Cliente:</label>
         </div>
       </div>
     </div>
@@ -53,30 +47,27 @@
       <table class="fl-table" id="myTable">
         <thead>
           <tr style="height: 25px">
-            <th>Código</th>
-            <th>Tipo</th>
-            <th>Unidade</th>
-            <th>Descrição</th>
+            <th>Data de emissão</th>
+            <th>Documento</th>
+            <th>Cliente</th>
             <th>Ações</th>
           </tr>
         </thead>
         <tbody>
-          <%produtos.forEach ((produto)=>{%>
+          <%contents.forEach ((content)=>{%>
           <tr>
             <td>
-                <p><%=produto.cod%></p>
+                <%let emi = new Date(content.emissao)%>
+                <p><%=emi.toLocaleDateString("pt-BR")%></p>
             </td>
             <td>
-              <p><%=produto.tipo%></p>
+              <p><%=content.doc%></p>
             </td>
             <td>
-                <p><%=produto.um%></p>
+              <p><%=content.cliente%></p>
             </td>
             <td>
-                <p><%=produto.descri%></p>
-            </td>
-            <td>
-              <a href="/logistica/produtos/detalhes/<%=produto.id%>">
+              <a href="/faturamento/nota-fiscal-saida/detalhes/<%=content.doc%>">
                 <button type="button" class="button-8">Detalhes</button>
               </a>
             </td>
