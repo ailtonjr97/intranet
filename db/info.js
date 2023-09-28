@@ -26,6 +26,18 @@ async function connect(){
 
 connect();
 
+const selectParametros = async()=>{
+    const conn = await connect();
+    const [rows] = await conn.query("select * from vpc_parametros");
+    return rows
+}
+
+const countParametros = async()=>{
+    const conn = await connect();
+    const [rows] = await conn.query('SELECT COUNT(*) AS contagem FROM vpc_parametros');
+    return rows[0].contagem;
+}
+
 const insertParametros = async(results)=>{
     const conn = await connect();
 
@@ -38,6 +50,7 @@ const insertParametros = async(results)=>{
             result.systemparameterid,
             result.branchid,
             result.type,
+            result.code,
             result.description[0].descriptionText,
             result.value[0].parameterValue,
         ]) 
@@ -49,5 +62,7 @@ const insertParametros = async(results)=>{
 }
 
 module.exports = {
-    insertParametros
+    insertParametros,
+    selectParametros,
+    countParametros
 };

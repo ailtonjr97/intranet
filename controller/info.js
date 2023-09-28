@@ -28,7 +28,10 @@ const modulos = async(req, res)=>{
 
 const parametros = async(req, res)=>{
     try {
-        res.render('info/parametros')
+        res.render('info/parametros', {
+            contents: await db.selectParametros(),
+            results: await db.countParametros()
+        })
     } catch (error) {
         console.log(error);
         res.render('error')
@@ -40,8 +43,8 @@ const insertVPC = async(req, res)=>{
         const records = await axios.get(process.env.APITOTVS + "api/framework/v1/systemParameters", {auth: {username: process.env.USERTOTVS, password: process.env.SENHAPITOTVS}});
         let limitador = records.data.remainingRecords + 10;
         const content = await axios.get(process.env.APITOTVS + "api/framework/v1/systemParameters?pageSize=" + limitador, {auth: {username: process.env.USERTOTVS, password: process.env.SENHAPITOTVS}});
-        await db.insertParametros(content);
-        res.redirec("/parametros")
+        await db.insertParametros(content.data.items);
+        res.redirect("/informacoes/parametros")
     } catch (error) {
         console.log(error);
         res.render('error')
