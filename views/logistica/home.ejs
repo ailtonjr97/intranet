@@ -1,6 +1,12 @@
 <%- include('../partials/sidebar') %>
 <link rel="stylesheet" href="/css/menu.css" />
 
+<style>
+    .row{
+        max-width: 99%;
+    }
+</style>
+
 
 <html>
 
@@ -9,12 +15,32 @@
             Logística
         </h2>
         <div class="row">
-            <div class="col d-flex justify-content-start">
-                <a href="/logistica/produtos">
-                    <div class="card">
-                        <h5>Produtos</h5>
-                    </div>
-                </a>
+            <div class="col">
+                <div class="row" style="text-align: center;">
+                    <h3>TOTVS</h3>
+                </div>
+                <div class="row mt-2">
+                    <a href="/logistica/produtos">
+                        <div class="card">
+                            <h5>Produtos</h5>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-sm-1" style=" width: 15px;">
+                <div class="vl" style="border-left: 6px solid rgb(62, 87, 156);height: 200px;"></div>
+            </div>
+            <div class="col">
+                <div class="row" style="text-align: center;">
+                    <h3>KORP</h3>
+                </div>
+                <div class="row mt-2">
+                    <a href="/logistica/korp/produtos">
+                        <div class="card">
+                            <h5>Produtos</h5>
+                        </div>
+                    </a>
+                </div>
             </div>
         </div>
     </body>

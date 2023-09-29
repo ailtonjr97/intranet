@@ -23,7 +23,7 @@ app.set("view engine", "ejs");
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
-app.use(cookieParser())
+app.use(cookieParser());
 
 function authenticationMiddleware(req, res, next){
   const token = req.cookies.jwt;
