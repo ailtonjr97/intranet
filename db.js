@@ -1,7 +1,9 @@
 const dotenv = require("dotenv");
 dotenv.config();
 
-const sqlConfig = {
+
+async function dbConfig(){
+  const sqlConfig = {
     user: process.env.MSUSER,
     password: process.env.MSPASSWORD,
     database: process.env.MSDATABASE,
@@ -16,6 +18,9 @@ const sqlConfig = {
       trustServerCertificate: true // change to true for local dev / self-signed certs
     }
   }
+
+  return sqlConfig
+}
   
   async function connect(){
       if(global.connection && global.connection.state !== 'disconnected')
@@ -42,6 +47,6 @@ const sqlConfig = {
 
   
   module.exports = {
-    sqlConfig,
+    dbConfig,
     connect,
 };

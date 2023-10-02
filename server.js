@@ -51,7 +51,7 @@ const checkUser = (req, res, next)=>{
         res.locals.user = null;
         next();
       } else {
-        let user = await db.getUserById(decodedToken.id);
+        let user = await db.getUserByIntranetID(decodedToken.id);
         res.locals.user = user;
         next();
       }

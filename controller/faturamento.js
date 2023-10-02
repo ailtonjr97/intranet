@@ -1,5 +1,22 @@
 const mysqlConnect = require('../db')
 const axios = require('axios')
+const sql = require('mssql')
+
+const sqlConfig = {
+    user: process.env.MSUSER,
+    password: process.env.MSPASSWORD,
+    database: process.env.MSDATABASE,
+    server: process.env.MSSERVER,
+    pool: {
+      max: 40,
+      min: 0,
+      idleTimeoutMillis: 30000
+    },
+    options: {
+      encrypt: true, // for azure
+      trustServerCertificate: true // change to true for local dev / self-signed certs
+    }
+  }
 
 const home = async(req, res)=>{
     res.render('faturamento/home')
@@ -396,8 +413,28 @@ const notaFiscalSaidaDetalhes = async(req, res)=>{
             itens: itens[0]
         })
     } catch (error) {
-        console.log(error)
-        res.render('error')
+        console.log(error);
+        res.render('error');
+    }
+}
+
+const pedidosKorp = async(req, res)=>{
+    try {
+        await sql.connect(sqlConfig);
+
+        const resultsQuery = `SELECT COUNT(R_E_C_N_O_) as contagem from CRM_PEDIDO WHERE PEDIDO LIKE '%${req.query.PEDIDO}%'`;
+        const contentsQuery = `SELECT PEDIDO, CLIENTE, DT_ENTREGA, DT_EMISSAO, USUARIO from CRM_PEDIDO WHERE PEDIDO LIKE '%${req.query.PEDIDO}%'`;
+
+        const results = await sql.query(resultsQuery)
+        const contents = await sql.query(contentsQuery)
+        
+        res.render('faturamento/pedidoskorp', {
+            results: results.recordset[0].contagem,
+            contents: contents.recordset,
+        });
+    } catch (error) {
+        console.log(error);
+        res.render('error');
     }
 }
 
@@ -415,5 +452,6 @@ module.exports = {
     atualizarSF2,
     notaFiscalSaidaDetalhes,
     atualizarSE4,
-    atualizarACY
+    atualizarACY,
+    pedidosKorp
 };

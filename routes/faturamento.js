@@ -15,7 +15,8 @@ const {
         atualizarSF2,
         notaFiscalSaidaDetalhes,
         atualizarSE4,
-        atualizarACY
+        atualizarACY,
+        pedidosKorp
     } = require('../controller/faturamento.js');
 
 router.get("/", home);
@@ -37,5 +38,8 @@ router.get("/pedidosdevenda/detalhes/:id/:filial", pedidosDeVendaDetalhes);
 router.get("/nota-fiscal-saida", notasFicalSaida);
 router.get("/atualizarSF2", atualizarSF2);
 router.get("/nota-fiscal-saida/detalhes/:doc", notaFiscalSaidaDetalhes);
+
+////////////KORP
+router.get("/korp/pedidos", pedidosKorp)
 
 module.exports = router;

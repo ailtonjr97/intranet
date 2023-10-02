@@ -9,7 +9,7 @@ app.use(cookieParser())
 let users = async(req, res)=>{
     try {
         res.render('users/users.ejs', {
-            users: await db.users(),
+            usuarios: await db.users(),
             results: await db.countUsers(),
         })
     } catch (error) {

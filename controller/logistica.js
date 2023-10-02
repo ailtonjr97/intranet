@@ -2,6 +2,22 @@ const mysqlConnect = require('../db')
 const axios = require('axios')
 const sql = require('mssql')
 
+const sqlConfig = {
+    user: process.env.MSUSER,
+    password: process.env.MSPASSWORD,
+    database: process.env.MSDATABASE,
+    server: process.env.MSSERVER,
+    pool: {
+      max: 40,
+      min: 0,
+      idleTimeoutMillis: 30000
+    },
+    options: {
+      encrypt: true, // for azure
+      trustServerCertificate: true // change to true for local dev / self-signed certs
+    }
+  }
+
 const home = async(req, res)=>{
     res.render('logistica/home')
 }
@@ -69,11 +85,15 @@ const detalhes = async(req, res)=>{
 const produtosKorp = async(req, res)=>{
     try {
             await sql.connect(sqlConfig);
-            
-            const query = `select CODIGO, DESCRI from ESTOQUE where CODIGO LIKE '%${req.query.CODIGO}%' and DESCRI LIKE '%${req.query.DESCRI}%' AND STATUS <> 'I'`;
-            const contents = await sql.query(query)
+
+            const resultsQuery = `select count(id) as 'contagem' from ESTOQUE where CODIGO LIKE '%${req.query.CODIGO}%' and DESCRI LIKE '%${req.query.DESCRI}%' AND STATUS <> 'I'`;
+            const contentsQuery = `select CODIGO, DESCRI from ESTOQUE where CODIGO LIKE '%${req.query.CODIGO}%' and DESCRI LIKE '%${req.query.DESCRI}%' AND STATUS <> 'I'`;
+
+            const results = await sql.query(resultsQuery)
+            const contents = await sql.query(contentsQuery)
 
             res.render('logistica/produtosKorp', {
+                results: results.recordset[0].contagem,
                 contents: contents.recordset
             });
        } catch (error) {
@@ -82,11 +102,51 @@ const produtosKorp = async(req, res)=>{
        }
 };
 
+const produtosKorpDetalhes = async(req, res)=>{
+    try {
+        await sql.connect(sqlConfig);
+
+        const detailsQuery = `select * from ESTOQUE where CODIGO = '${req.params.id}'`;
+
+        const details = await sql.query(detailsQuery)
+
+        res.render('logistica/produtoskorpdetalhes', {
+            details: details.recordset[0],
+        });
+
+    } catch (error) {
+        res.render('error');
+        console.log(error);
+    }
+}
+
+const itenskorptotvs = async (req, res)=>{
+    try {
+        await sql.connect(sqlConfig);
+
+        const resultsQuery = `SELECT COUNT(CODFIBRA) as contagem from CST_ITENS_TOTVS WHERE CODFIBRA LIKE '%${req.query.CODFIBRA}%' AND B1_X_COD LIKE '%${req.query.CODIGOTOTVS}%' AND DESCRICAO LIKE '%${req.query.DESCRICAO}%'`;
+        const contentsQuery = `SELECT CODFIBRA, B1_X_COD, DESCRICAO from CST_ITENS_TOTVS WHERE CODFIBRA LIKE '%${req.query.CODFIBRA}%' AND B1_X_COD LIKE '%${req.query.CODIGOTOTVS}%' AND DESCRICAO LIKE '%${req.query.DESCRICAO}%'`;
+        
+        const results = await sql.query(resultsQuery)
+        const contents = await sql.query(contentsQuery)
+
+        res.render('logistica/itenskorptotvs', {
+            results: results.recordset[0].contagem,
+            contents: contents.recordset,
+        });
+    } catch (error) {
+        res.render('error');
+        console.log(error);
+    }
+}
+
 
 module.exports = {
     home,
     produtos,
     atualizarSB1,
     detalhes,
-    produtosKorp
+    produtosKorp,
+    produtosKorpDetalhes,
+    itenskorptotvs
 };

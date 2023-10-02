@@ -1,0 +1,98 @@
+<%- include('../partials/sidebar') %>
+<link rel="stylesheet" href="/css/table.css" />
+<link rel="stylesheet" href="/css/button8.css" />
+<link rel="stylesheet" href="/css/loading.css" />
+
+
+<div id="loading"></div>
+    <div class="row mt-2">
+      <div class="col-md-4">
+        <h4>Produtos</h4>
+      </div>
+      <div class="col-lg-4">
+      </div>
+      <div class="col-md-4">
+        <button type="button" class="button-8 mb-2" id="result" style="float: right;" disabled>
+          <span class="counter-value"><%=results%></span>
+          resultados
+        </button>
+      </div>
+    </div>
+    <div class="row mb-3">
+      <div class="col">
+        <div class="form-floating">
+          <input type="text" class="form-control" id="procura0"/>
+          <label for="procuraBtn0">Código:</label>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-floating">
+          <input type="text" class="form-control" id="procura1"/>
+          <label for="procuraBtn3">Código TOTVS:</label>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-floating">
+          <input type="text" class="form-control" id="procura2"/>
+          <label for="procuraBtn3">Descrição:</label>
+        </div>
+      </div>
+    </div>
+    <div class="table-wrapper table-responsive table-striped mb-4">
+      <table class="fl-table" id="myTable">
+        <thead>
+          <tr style="height: 25px">
+            <th>Código Korp</th>
+            <th>Código TOTVS</th>
+            <th>Descrição</th>
+          </tr>
+        </thead>
+        <tbody>
+          <%contents.forEach ((content)=>{%>
+          <tr>
+            <td>
+                <p><%=content.CODFIBRA%></p>
+            </td>
+            <td>
+              <p><%=content.B1_X_COD%></p>
+            </td>
+            <td>
+                <p><%=content.DESCRICAO%></p>
+            </td>
+          </tr>
+          <%})%>
+        </tbody>
+        <tbody></tbody>
+      </table>
+    </div>
+
+<script>
+const searchParams = new URLSearchParams(window.location.search);
+
+document.getElementById("procura0").value = searchParams.get('CODFIBRA');
+document.getElementById("procura1").value = searchParams.get('CODIGOTOTVS');
+document.getElementById("procura2").value = searchParams.get('DESCRICAO');
+
+document.getElementById("procura0").addEventListener("keypress", function(event) {
+    if (event.key === "Enter") {
+        window.location = `/logistica/itenskorptotvs?CODFIBRA=${document.getElementById("procura0").value}&CODIGOTOTVS=${document.getElementById("procura1").value}&DESCRICAO=${document.getElementById("procura2").value}`
+    }
+});
+
+document.getElementById("procura1").addEventListener("keypress", function(event) {
+    if (event.key === "Enter") {
+        window.location = `/logistica/itenskorptotvs?CODFIBRA=${document.getElementById("procura0").value}&CODIGOTOTVS=${document.getElementById("procura1").value}&DESCRICAO=${document.getElementById("procura2").value}`
+    }
+});
+
+document.getElementById("procura2").addEventListener("keypress", function(event) {
+    if (event.key === "Enter") {
+        window.location = `/logistica/itenskorptotvs?CODFIBRA=${document.getElementById("procura0").value}&CODIGOTOTVS=${document.getElementById("procura1").value}&DESCRICAO=${document.getElementById("procura2").value}`
+    }
+});
+</script>
+
+
+<script type="text/javascript" src="/js/carregador.js"></script>
+<script type="text/javascript" src="/js/confirmation.js"></script>
+<script type="text/javascript" src="/js/procura.js"></script>

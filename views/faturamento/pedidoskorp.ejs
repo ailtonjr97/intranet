@@ -25,19 +25,16 @@
           <label for="procuraBtn0">Código:</label>
         </div>
       </div>
-      <div class="col">
-        <div class="form-floating">
-          <input type="text" class="form-control" id="procura1"/>
-          <label for="procuraBtn1">Descrição:</label>
-        </div>
-      </div>
     </div>
     <div class="table-wrapper table-responsive table-striped mb-4">
       <table class="fl-table" id="myTable">
         <thead>
           <tr style="height: 25px">
             <th>Código</th>
-            <th>Descrição</th>
+            <th>Cliente</th>
+            <th>Data Entrega</th>
+            <th>Data Emissão</th>
+            <th>Usuário</th>
             <th>Ações</th>
           </tr>
         </thead>
@@ -46,15 +43,6 @@
           <tr>
             <td>
                 <p><%=content.CODIGO%></p>
-            </td>
-            <td>
-                <p>
-                    <% if(content.DESCRI.length >= 60){%>
-                        <%=content.DESCRI.substring(0, 60) + '...'%>
-                    <%}else{%>
-                        <%=content.DESCRI%>
-                    <%}%>
-                </p>
             </td>
             <td>
               <a href="/logistica/korp/produtos/<%=content.CODIGO%>">
@@ -72,20 +60,13 @@
 <script>
   const searchParams = new URLSearchParams(window.location.search);
 
-  document.getElementById("procura0").value = searchParams.get('CODIGO');
-  document.getElementById("procura1").value = searchParams.get('DESCRI');
+  document.getElementById("procura0").value = searchParams.get('PEDIDO');
 
   document.getElementById("procura0").addEventListener("keypress", function(event) {
       if (event.key === "Enter") {
-          window.location = `/logistica/korp/produtos?CODIGO=${document.getElementById("procura0").value}&DESCRI=${document.getElementById("procura1").value}`
+          window.location = `/faturamento/korp/pedidos?PEDIDO=${document.getElementById("procura0").value}`
       }
   });
-
-  document.getElementById("procura1").addEventListener("keypress", function(event) {
-      if (event.key === "Enter") {
-          window.location = `/logistica/korp/produtos?CODIGO=${document.getElementById("procura0").value}&DESCRI=${document.getElementById("procura1").value}`
-      }
-});
 </script>
 
 

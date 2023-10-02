@@ -1,6 +1,16 @@
 <%- include('../partials/sidebar') %>
 <link rel="stylesheet" href="/css/menu.css" />
 
+<style>
+    .row{
+        max-width: 99%;
+    }
+
+    .card{
+        margin-top: 2%;
+    }
+</style>
+
 
 <html>
 
@@ -9,32 +19,66 @@
             Faturamento
         </h2>
         <div class="row">
-            <div class="col d-flex justify-content-start">
-                <a href="/faturamento/clientes">
-                    <div class="card">
-                        <h5>Clientes</h5>
+            <div class="col">
+                <div class="row" style="text-align: center;">
+                    <h3>TOTVS</h3>
+                </div>
+                <div class="row mt-2">
+                    <div class="col">
+                        <a href="/faturamento/clientes">
+                            <div class="card">
+                                <h5>Clientes</h5>
+                            </div>
+                        </a>
                     </div>
-                </a>
-                <a href="/faturamento/pedidosdevenda">
-                    <div class="card">
-                        <h5>Pedidos de Venda</h5>
+                    <div class="col">
+                        <a href="/faturamento/pedidosdevenda">
+                            <div class="card mt-2">
+                                <h5>Pedidos de Venda</h5>
+                            </div>
+                        </a>
                     </div>
-                </a>
-                <a href="/faturamento/condicao-de-pagamento">
-                    <div class="card">
-                        <h5>Condição de Pagamento</h5>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <a href="/faturamento/condicao-de-pagamento">
+                            <div class="card">
+                                <h5>Condição de Pagamento</h5>
+                            </div>
+                        </a>
                     </div>
-                </a>
-                <a href="/faturamento/grupos-de-venda">
-                    <div class="card">
-                        <h5>Grupos de Venda</h5>
+                    <div class="col">
+                        <a href="/faturamento/grupos-de-venda">
+                            <div class="card">
+                                <h5>Grupos de Venda</h5>
+                            </div>
+                        </a>
                     </div>
-                </a>
-                <a href="/faturamento/nota-fiscal-saida">
-                    <div class="card">
-                        <h5>Notas Fiscais de Saída</h5>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <a href="/faturamento/nota-fiscal-saida">
+                            <div class="card">
+                                <h5>Notas Fiscais de Saída</h5>
+                            </div>
+                        </a>
                     </div>
-                </a>
+                </div>
+            </div>
+            <div class="col-sm-1" style=" width: 15px;">
+                <div class="vl" style="border-left: 6px solid rgb(62, 87, 156);height: 200px;"></div>
+            </div>
+            <div class="col">
+                <div class="row" style="text-align: center;">
+                    <h3>KORP</h3>
+                </div>
+                <div class="row mt-2">
+                    <a href="/faturamento/korp/pedidos">
+                        <div class="card">
+                            <h5>Pedidos de Venda</h5>
+                        </div>
+                    </a>
+                </div>
             </div>
         </div>
     </body>
