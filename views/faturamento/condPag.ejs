@@ -18,36 +18,21 @@
           <span class="counter-value"><%=results%></span>
           resultados
         </button>
+        <a href="/faturamento/atualizarSE4">
+          <button type="button" class="button-8" id="result" style="float: right; margin-right: 3%;">Atualizar tabela</button>
+        </a>
       </div>
     </div>
     <div class="row mb-3">
       <div class="col">
         <div class="form-floating">
-          <input type="text" class="form-control" id="procuraBtn0" onkeyup="procura(0, 'procuraBtn0')"/>
-          <label for="procuraBtn0">Filial:</label>
-        </div>
-      </div>
-      <div class="col">
-        <div class="form-floating">
-          <input type="text" class="form-control" id="procuraBtn1" onkeyup="procura(1, 'procuraBtn1')"/>
+          <input type="text" class="form-control" id="procura0"/>
           <label for="procuraBtn1">Código:</label>
         </div>
       </div>
       <div class="col">
         <div class="form-floating">
-          <input type="text" class="form-control" id="procuraBtn2" onkeyup="procura(2, 'procuraBtn2')"/>
-          <label for="procuraBtn2">Tipo:</label>
-        </div>
-      </div>
-      <div class="col">
-        <div class="form-floating">
-          <input type="text" class="form-control" id="procuraBtn3" onkeyup="procura(3, 'procuraBtn3')"/>
-          <label for="procuraBtn3">Condição:</label>
-        </div>
-      </div>
-      <div class="col">
-        <div class="form-floating">
-          <input type="text" class="form-control" id="procuraBtn4" onkeyup="procura(4, 'procuraBtn4')"/>
+          <input type="text" class="form-control" id="procura1"/>
           <label for="procuraBtn4">Descrição:</label>
         </div>
       </div>
@@ -64,22 +49,22 @@
           </tr>
         </thead>
         <tbody>
-          <%apis.forEach ((api)=>{%>
+          <%contents.forEach ((content)=>{%>
           <tr>
             <td>
-                <p><%=api.filial%></p>
+                <p><%=content.filial%></p>
             </td>
             <td>
-              <p><%=api.codigo%></p>
+              <p><%=content.codigo%></p>
             </td>
             <td>
-                <p><%=api.tipo%></p>
+                <p><%=content.tipo%></p>
             </td>
             <td>
-                <p><%=api.cond%></p>
+                <p><%=content.cond%></p>
             </td>
             <td>
-                <p><%=api.descri%></p>
+                <p><%=content.descri%></p>
             </td>
           </tr>
           <%})%>
@@ -87,6 +72,25 @@
         <tbody></tbody>
       </table>
     </div>
+
+<script>
+  const searchParams = new URLSearchParams(window.location.search);
+  
+  document.getElementById("procura0").value = searchParams.get('CODIGO');
+  document.getElementById("procura1").value = searchParams.get('DESCRI');
+  
+  document.getElementById("procura0").addEventListener("keypress", function(event) {
+      if (event.key === "Enter") {
+          window.location = `/faturamento/condicao-de-pagamento?CODIGO=${document.getElementById("procura0").value}&DESCRI=${document.getElementById("procura1").value}`
+      }
+  });
+  
+  document.getElementById("procura1").addEventListener("keypress", function(event) {
+      if (event.key === "Enter") {
+          window.location = `/faturamento/condicao-de-pagamento?CODIGO=${document.getElementById("procura0").value}&DESCRI=${document.getElementById("procura1").value}`
+      }
+  });
+</script>
 
 
 <script type="text/javascript" src="/js/carregador.js"></script>

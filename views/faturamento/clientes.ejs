@@ -26,13 +26,13 @@
     <div class="row mb-3">
       <div class="col">
         <div class="form-floating">
-          <input type="text" class="form-control" id="procuraBtn0" onkeyup="procura(0, 'procuraBtn0')"/>
+          <input type="text" class="form-control" id="procura0"/>
           <label for="procuraBtn0">Código:</label>
         </div>
       </div>
       <div class="col">
         <div class="form-floating">
-          <input type="text" class="form-control" id="procuraBtn1" onkeyup="procura(1, 'procuraBtn1')"/>
+          <input type="text" class="form-control" id="procura1"/>
           <label for="procuraBtn1">Nome:</label>
         </div>
       </div>
@@ -66,6 +66,25 @@
         <tbody></tbody>
       </table>
     </div>
+
+<script>
+  const searchParams = new URLSearchParams(window.location.search);
+
+  document.getElementById("procura0").value = searchParams.get('COD');
+  document.getElementById("procura1").value = searchParams.get('NOME');
+
+  document.getElementById("procura0").addEventListener("keypress", function(event) {
+      if (event.key === "Enter") {
+          window.location = `/faturamento/clientes?COD=${document.getElementById("procura0").value}&NOME=${document.getElementById("procura1").value}`
+      }
+  });
+
+  document.getElementById("procura1").addEventListener("keypress", function(event) {
+      if (event.key === "Enter") {
+          window.location = `/faturamento/clientes?COD=${document.getElementById("procura0").value}&NOME=${document.getElementById("procura1").value}`
+      }
+  });
+</script>
 
 
 <script type="text/javascript" src="/js/carregador.js"></script>

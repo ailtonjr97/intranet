@@ -13,18 +13,22 @@ const {
         pedidosDeVendaDetalhes,
         notasFicalSaida,
         atualizarSF2,
-        notaFiscalSaidaDetalhes
+        notaFiscalSaidaDetalhes,
+        atualizarSE4,
+        atualizarACY
     } = require('../controller/faturamento.js');
 
 router.get("/", home);
 
-router.get("/condicao-de-pagamento", condPag);
-
-router.get("/grupos-de-venda", gruposDeVenda);
-
 router.get("/clientes", clientes);
 router.get("/atualizarSA1", atualizarSA1);
 router.get("/clientes/detalhes/:id", detalhes);
+
+router.get("/condicao-de-pagamento", condPag);
+router.get("/atualizarSE4", atualizarSE4)
+
+router.get("/grupos-de-venda", gruposDeVenda);
+router.get("/atualizarACY", atualizarACY);
 
 router.get("/pedidosdevenda", pedidosDeVenda);
 router.get("/atualizarSC5", atualizarSC5);

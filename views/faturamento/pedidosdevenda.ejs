@@ -26,19 +26,19 @@
     <div class="row mb-3">
       <div class="col">
         <div class="form-floating">
-          <input type="text" class="form-control" id="procuraBtn0" onkeyup="procura(0, 'procuraBtn0')"/>
+          <input type="text" class="form-control" id="procura0"/>
           <label for="procuraBtn0">Número do pedido:</label>
         </div>
       </div>
       <div class="col">
         <div class="form-floating">
-          <input type="text" class="form-control" id="procuraBtn1" onkeyup="procura(1, 'procuraBtn1')"/>
+          <input type="text" class="form-control" id="procura1"/>
           <label for="procuraBtn1">Cliente:</label>
         </div>
       </div>
       <div class="col">
         <div class="form-floating">
-          <input type="text" class="form-control" id="procuraBtn2" onkeyup="procura(2, 'procuraBtn2')"/>
+          <input type="text" class="form-control" id="procura2"/>
           <label for="procuraBtn2">Filial:</label>
         </div>
       </div>
@@ -76,6 +76,32 @@
         <tbody></tbody>
       </table>
     </div>
+
+<script>
+  const searchParams = new URLSearchParams(window.location.search);
+
+  document.getElementById("procura0").value = searchParams.get('NUM');
+  document.getElementById("procura1").value = searchParams.get('CLIENTE');
+  document.getElementById("procura2").value = searchParams.get('FILIAL');
+
+  document.getElementById("procura0").addEventListener("keypress", function(event) {
+      if (event.key === "Enter") {
+          window.location = `/faturamento/pedidosdevenda?NUM=${document.getElementById("procura0").value}&CLIENTE=${document.getElementById("procura1").value}&FILIAL=${document.getElementById("procura2").value}`
+      }
+  });
+
+  document.getElementById("procura1").addEventListener("keypress", function(event) {
+      if (event.key === "Enter") {
+          window.location = `/faturamento/pedidosdevenda?NUM=${document.getElementById("procura0").value}&CLIENTE=${document.getElementById("procura1").value}&FILIAL=${document.getElementById("procura2").value}`
+      }
+  });
+
+  document.getElementById("procura2").addEventListener("keypress", function(event) {
+      if (event.key === "Enter") {
+          window.location = `/faturamento/pedidosdevenda?NUM=${document.getElementById("procura0").value}&CLIENTE=${document.getElementById("procura1").value}&FILIAL=${document.getElementById("procura2").value}`
+      }
+  });
+</script>
 
 
 <script type="text/javascript" src="/js/carregador.js"></script>

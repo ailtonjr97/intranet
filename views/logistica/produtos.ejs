@@ -24,25 +24,13 @@
     <div class="row mb-3">
       <div class="col">
         <div class="form-floating">
-          <input type="text" class="form-control" id="procuraBtn0" onkeyup="procura(0, 'procuraBtn0')"/>
+          <input type="text" class="form-control" id="procura0"/>
           <label for="procuraBtn0">Código:</label>
         </div>
       </div>
       <div class="col">
         <div class="form-floating">
-          <input type="text" class="form-control" id="procuraBtn1" onkeyup="procura(1, 'procuraBtn1')"/>
-          <label for="procuraBtn1">Tipo:</label>
-        </div>
-      </div>
-      <div class="col">
-        <div class="form-floating">
-          <input type="text" class="form-control" id="procuraBtn2" onkeyup="procura(2, 'procuraBtn2')"/>
-          <label for="procuraBtn2">Unidade:</label>
-        </div>
-      </div>
-      <div class="col">
-        <div class="form-floating">
-          <input type="text" class="form-control" id="procuraBtn3" onkeyup="procura(3, 'procuraBtn3')"/>
+          <input type="text" class="form-control" id="procura1"/>
           <label for="procuraBtn3">Descrição:</label>
         </div>
       </div>
@@ -59,22 +47,22 @@
           </tr>
         </thead>
         <tbody>
-          <%produtos.forEach ((produto)=>{%>
+          <%contents.forEach ((content)=>{%>
           <tr>
             <td>
-                <p><%=produto.cod%></p>
+                <p><%=content.cod%></p>
             </td>
             <td>
-              <p><%=produto.tipo%></p>
+              <p><%=content.tipo%></p>
             </td>
             <td>
-                <p><%=produto.um%></p>
+                <p><%=content.um%></p>
             </td>
             <td>
-                <p><%=produto.descri%></p>
+                <p><%=content.descri%></p>
             </td>
             <td>
-              <a href="/logistica/produtos/detalhes/<%=produto.id%>">
+              <a href="/logistica/produtos/detalhes/<%=content.id%>">
                 <button type="button" class="button-8">Detalhes</button>
               </a>
             </td>
@@ -84,6 +72,25 @@
         <tbody></tbody>
       </table>
     </div>
+
+<script>
+const searchParams = new URLSearchParams(window.location.search);
+
+document.getElementById("procura0").value = searchParams.get('CODIGO');
+document.getElementById("procura1").value = searchParams.get('DESCRI');
+
+document.getElementById("procura0").addEventListener("keypress", function(event) {
+    if (event.key === "Enter") {
+        window.location = `/logistica/produtos?CODIGO=${document.getElementById("procura0").value}&DESCRI=${document.getElementById("procura1").value}`
+    }
+});
+
+document.getElementById("procura1").addEventListener("keypress", function(event) {
+    if (event.key === "Enter") {
+        window.location = `/logistica/produtos?CODIGO=${document.getElementById("procura0").value}&DESCRI=${document.getElementById("procura1").value}`
+    }
+});
+</script>
 
 
 <script type="text/javascript" src="/js/carregador.js"></script>

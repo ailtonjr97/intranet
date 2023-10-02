@@ -50,7 +50,8 @@
             <div class="row mt-2">
                 <div class="col d-flex justify-content-evenly">
                     <div class="form-floating mb-3 margen">
-                        <input type="text" class="form-control" id="urev" placeholder="<%=produto.urev%>" value="<%=produto.urev%>" readonly>
+                        <%const urev = new Date(produto.urev)%>
+                        <input type="text" class="form-control" id="urev" placeholder="<%=urev.toLocaleDateString('pt-BR')%>" value="<%=urev.toLocaleDateString('pt-BR')%>" readonly>
                         <label for="urev">Última revisão:</label>
                     </div>
                 </div>
