@@ -1,6 +1,5 @@
 const mysqlConnect = require('../db')
 const axios = require('axios')
-const nfs = require('../db/notafiscalsaida')
 
 const home = async(req, res)=>{
     res.render('faturamento/home')
