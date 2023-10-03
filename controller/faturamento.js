@@ -422,8 +422,26 @@ const pedidosKorp = async(req, res)=>{
     try {
         await sql.connect(sqlConfig);
 
-        const resultsQuery = `SELECT COUNT(R_E_C_N_O_) as contagem from CRM_PEDIDO WHERE PEDIDO LIKE '%${req.query.PEDIDO}%'`;
-        const contentsQuery = `SELECT PEDIDO, CLIENTE, DT_ENTREGA, DT_EMISSAO, USUARIO from CRM_PEDIDO WHERE PEDIDO LIKE '%${req.query.PEDIDO}%'`;
+        if(req.query.PEDIDO == undefined || req.query.PEDIDO == 'undefined' || req.query.PEDIDO == ''){
+            var pedido = ''
+        }else{
+            pedido = req.query.PEDIDO
+        }
+
+        if(req.query.LIMITE == undefined || req.query.LIMITE == 'undefined' || req.query.LIMITE == ''){
+            var limite = 200
+        }else{
+            limite = req.query.LIMITE
+        }
+
+        if(req.query.STATUS == undefined || req.query.STATUS == 'undefined' || req.query.STATUS == ''){
+            var status = ''
+        }else{
+            status = req.query.STATUS
+        }
+
+        const resultsQuery = `SELECT COUNT(R_E_C_N_O_) as contagem from CRM_PEDIDO WHERE PEDIDO LIKE '%${pedido}%' AND STATUS_PEDIDO LIKE '%${status}%'`;
+        const contentsQuery = `SELECT top ${limite} CRM_PEDIDO.PEDIDO, CLIENTES.RASSOC, CRM_PEDIDO.DT_ENTREGA, CRM_PEDIDO.DT_EMISSAO, CRM_PEDIDO.USUARIO, CRM_PEDIDO.STATUS_PEDIDO from CRM_PEDIDO inner join CLIENTES on CRM_PEDIDO.CLIENTE = CLIENTES.CODIGO WHERE PEDIDO LIKE '%${pedido}%' AND STATUS_PEDIDO LIKE '%${status}%' order by CRM_PEDIDO.DT_EMISSAO desc`;
 
         const results = await sql.query(resultsQuery)
         const contents = await sql.query(contentsQuery)
@@ -435,6 +453,25 @@ const pedidosKorp = async(req, res)=>{
     } catch (error) {
         console.log(error);
         res.render('error');
+    }
+}
+
+const pedidosKorpDetalhes = async(req, res)=>{
+    try {
+        await sql.connect(sqlConfig);
+
+        const pedido = req.params.ano + '/' + req.params.id
+        const contentsQuery = `SELECT * FROM CRM_PEDIDO WHERE PEDIDO = '${pedido}'`;
+        //const contentsQuery = `SELECT * FROM CRM_PEDIDO AS P INNER JOIN CRM_ITEM_PEDIDO AS I ON I.PEDIDO = P.R_E_C_N_O_ WHERE P.PEDIDO = '${pedido}'`;
+
+        const contents = await sql.query(contentsQuery)
+
+        res.render('faturamento/pedidoskorpdetalhes', {
+            contents: contents.recordset[0],
+            itens: []
+        });
+    } catch (error) {
+        
     }
 }
 
@@ -453,5 +490,6 @@ module.exports = {
     notaFiscalSaidaDetalhes,
     atualizarSE4,
     atualizarACY,
-    pedidosKorp
+    pedidosKorp,
+    pedidosKorpDetalhes
 };

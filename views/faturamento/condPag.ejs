@@ -18,9 +18,11 @@
           <span class="counter-value"><%=results%></span>
           resultados
         </button>
+        <%if (user.admin == 1){%>
         <a href="/faturamento/atualizarSE4">
           <button type="button" class="button-8" id="result" style="float: right; margin-right: 3%;">Atualizar tabela</button>
         </a>
+        <%}%>
       </div>
     </div>
     <div class="row mb-3">

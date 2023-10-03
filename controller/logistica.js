@@ -84,18 +84,36 @@ const detalhes = async(req, res)=>{
 
 const produtosKorp = async(req, res)=>{
     try {
-            await sql.connect(sqlConfig);
+        if(req.query.LIMITE == undefined || req.query.LIMITE == 'undefined' || req.query.LIMITE == ''){
+            var limite = 200
+        }else{
+            limite = req.query.LIMITE
+        }
 
-            const resultsQuery = `select count(id) as 'contagem' from ESTOQUE where CODIGO LIKE '%${req.query.CODIGO}%' and DESCRI LIKE '%${req.query.DESCRI}%' AND STATUS <> 'I'`;
-            const contentsQuery = `select CODIGO, DESCRI from ESTOQUE where CODIGO LIKE '%${req.query.CODIGO}%' and DESCRI LIKE '%${req.query.DESCRI}%' AND STATUS <> 'I'`;
+        if(req.query.CODIGO == undefined || req.query.CODIGO == 'undefined' || req.query.CODIGO == ''){
+            var codigo = ''
+        }else{
+            codigo = req.query.LIMITE
+        }
 
-            const results = await sql.query(resultsQuery)
-            const contents = await sql.query(contentsQuery)
+        if(req.query.DESCRI == undefined || req.query.DESCRI == 'undefined' || req.query.DESCRI == ''){
+            var descri = ''
+        }else{
+            descri = req.query.LIMITE
+        }
 
-            res.render('logistica/produtosKorp', {
-                results: results.recordset[0].contagem,
-                contents: contents.recordset
-            });
+        await sql.connect(sqlConfig);
+
+        const resultsQuery = `select count(id) as 'contagem' from ESTOQUE where CODIGO LIKE '%${codigo}%' and DESCRI LIKE '%${descri}%' AND STATUS <> 'I'`;
+        const contentsQuery = `select top ${limite} CODIGO, DESCRI from ESTOQUE where CODIGO LIKE '%${codigo}%' and DESCRI LIKE '%${descri}%' AND STATUS <> 'I'`;
+
+        const results = await sql.query(resultsQuery)
+        const contents = await sql.query(contentsQuery)
+
+        res.render('logistica/produtosKorp', {
+            results: results.recordset[0].contagem,
+            contents: contents.recordset
+        });
        } catch (error) {
             res.render('error')
             console.log(error)
@@ -124,8 +142,32 @@ const itenskorptotvs = async (req, res)=>{
     try {
         await sql.connect(sqlConfig);
 
-        const resultsQuery = `SELECT COUNT(CODFIBRA) as contagem from CST_ITENS_TOTVS WHERE CODFIBRA LIKE '%${req.query.CODFIBRA}%' AND B1_X_COD LIKE '%${req.query.CODIGOTOTVS}%' AND DESCRICAO LIKE '%${req.query.DESCRICAO}%'`;
-        const contentsQuery = `SELECT CODFIBRA, B1_X_COD, DESCRICAO from CST_ITENS_TOTVS WHERE CODFIBRA LIKE '%${req.query.CODFIBRA}%' AND B1_X_COD LIKE '%${req.query.CODIGOTOTVS}%' AND DESCRICAO LIKE '%${req.query.DESCRICAO}%'`;
+        if(req.query.LIMITE == undefined || req.query.LIMITE == 'undefined' || req.query.LIMITE == ''){
+            var limite = 200
+        }else{
+            limite = req.query.LIMITE
+        }
+
+        if(req.query.CODFIBRA == undefined || req.query.CODFIBRA == 'undefined' || req.query.CODFIBRA == ''){
+            var codfibra = ''
+        }else{
+            codfibra = req.query.CODFIBRA
+        }
+
+        if(req.query.CODIGOTOTVS == undefined || req.query.CODIGOTOTVS == 'undefined' || req.query.CODIGOTOTVS == ''){
+            var codigototvs = ''
+        }else{
+            codigototvs = req.query.CODIGOTOTVS
+        }
+
+        if(req.query.DESCRICAO == undefined || req.query.DESCRICAO == 'undefined' || req.query.DESCRICAO == ''){
+            var descricao = ''
+        }else{
+            descricao = req.query.DESCRICAO
+        }
+
+        const resultsQuery = `SELECT COUNT(CODFIBRA) as contagem from CST_ITENS_TOTVS WHERE CODFIBRA LIKE '%${codfibra}%' AND B1_X_COD LIKE '%${codigototvs}%' AND DESCRICAO LIKE '%${descricao}%'`;
+        const contentsQuery = `SELECT TOP ${limite} CODFIBRA, B1_X_COD, DESCRICAO from CST_ITENS_TOTVS WHERE CODFIBRA LIKE '%${codfibra}%' AND B1_X_COD LIKE '%${codigototvs}%' AND DESCRICAO LIKE '%${descricao}%'`;
         
         const results = await sql.query(resultsQuery)
         const contents = await sql.query(contentsQuery)

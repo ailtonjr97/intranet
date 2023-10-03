@@ -2,6 +2,7 @@ const db = require('../db/users.js')
 const bcrypt = require('bcryptjs');
 const express = require("express");
 const cookieParser = require("cookie-parser");
+const mysqlConnect = require('../db')
 
 const app = express();
 app.use(cookieParser())
@@ -29,12 +30,19 @@ let newUser = async(req, res)=>{
 
 let createUser = async (req, res)=>{
     try {
-        db.insertUser({
+        await db.insertUser({
             name: req.body.name,
             email: req.body.email,
             password: bcrypt.hashSync(req.body.password), salt: 10,
             active: 1
         });
+        const conn = await mysqlConnect.connect();
+
+        const user = await conn.query("select * from users order by id desc limit 1");
+        const contentsQuery = `INSERT INTO permissions (user_id, visualiza_pedido) VALUES (${user[0][0].id}, 0)`;
+        await conn.query(contentsQuery);
+
+
         res.redirect("/usuarios");
     } catch (error) {
         console.log(error)

@@ -1,0 +1,56 @@
+<%- include('../partials/sidebar') %>
+
+<head>
+    <link rel="stylesheet" href="/css/table.css" />
+</head>
+
+<%if(ver_pedido == 1){%>
+<body>
+    <div class="row mt-2">
+        <h1 style="color: black;">Detalhes do pedido <%=contents.PEDIDO%></h1>
+    </div>
+    <div class="row mt-2">
+      <div class="col-sm-2">
+          <div class="form-floating">
+            <input type="text" class="form-control" id="cliente" value="<%=contents.CLIENTE%>" readonly>
+            <label for="cliente">Código cliente:</label>
+          </div>
+      </div>
+      <div class="col">
+          <div class="form-floating">
+            <input type="text" class="form-control" id="nome" value="" readonly>
+            <label for="nome">Nome cliente:</label>
+          </div>
+      </div>
+    </div>
+    <div class="row mt-4">
+        <div class="table-wrapper table-responsive table-striped mb-4">
+            <table class="fl-table" id="myTable">
+              <thead>
+                <tr style="height: 25px">
+                  <th>ID</th>
+                  <th>Código produto</th>
+                  <th>Descritivo</th>
+                  <th>Quantidade venda</th>
+                  <th>Quantidade entrada</th>
+                  <th>Preço unitário</th>
+                  <th>Preço total</th>
+                  <th>Desconto</th>
+                  <th>Data entrega</th>
+                  <th>Data faturamento</th>
+                </tr>
+              </thead>
+              <tbody>
+                <%itens.forEach ((item)=>{%>
+                <tr>
+                </tr>
+                <%})%>
+              </tbody>
+              <tbody></tbody>
+            </table>
+          </div>
+    </div>
+</body>
+<%}else{%>
+    <h2 style="text-align: center; margin-top: 10%;">Sem permissão para ver os pedidos.</h2>
+<%}%>

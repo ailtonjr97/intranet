@@ -5,9 +5,10 @@
 
 
 <div id="loading"></div>
+<%if(ver_pedido == 1){%>
     <div class="row mt-2">
       <div class="col-md-4">
-        <h4>Produtos</h4>
+        <h4>Pedidos</h4>
       </div>
       <div class="col-lg-4">
       </div>
@@ -22,7 +23,25 @@
       <div class="col">
         <div class="form-floating">
           <input type="text" class="form-control" id="procura0"/>
-          <label for="procuraBtn0">Código:</label>
+          <label for="procura0">Código:</label>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-floating">
+          <input type="number" class="form-control" id="procura2" min="0" oninput="this.value = !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null"/>
+          <label for="procura2">Limite:</label>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-floating">
+          <select class="form-select" id="procura1">
+            <option value=""></option>
+            <option value="Aberto">Aberto</option>
+            <option value="Aprovado">Aprovado</option>
+            <option value="FECHADO">Fechado</option>
+            <option value="Reprovado">Reprovado</option>
+          </select>
+          <label for="procura1">Status:</label>
         </div>
       </div>
     </div>
@@ -34,7 +53,8 @@
             <th>Cliente</th>
             <th>Data Entrega</th>
             <th>Data Emissão</th>
-            <th>Usuário</th>
+            <th>Vendedor</th>
+            <th>Status</th>
             <th>Ações</th>
           </tr>
         </thead>
@@ -42,10 +62,25 @@
           <%contents.forEach ((content)=>{%>
           <tr>
             <td>
-                <p><%=content.CODIGO%></p>
+                <p><%=content.PEDIDO%></p>
             </td>
             <td>
-              <a href="/logistica/korp/produtos/<%=content.CODIGO%>">
+              <p><%=content.RASSOC%></p>
+            </td>
+            <td>
+              <p><%=content.DT_ENTREGA%></p>
+            </td>
+            <td>
+              <p><%=content.DT_EMISSAO%></p>
+            </td>
+            <td>
+              <p><%=content.USUARIO%></p>
+            </td>
+            <td>
+              <p><%=content.STATUS_PEDIDO%></p>
+            </td>
+            <td>
+              <a href="/faturamento/korp/pedidos/<%=content.PEDIDO%>">
                 <button type="button" class="button-8">Detalhes</button>
               </a>
             </td>
@@ -55,18 +90,30 @@
         <tbody></tbody>
       </table>
     </div>
+    <%}else{%>
+      <h2 style="text-align: center; margin-top: 10%;">Sem permissão para ver os pedidos.</h2>
+    <%}%>
 
 
 <script>
   const searchParams = new URLSearchParams(window.location.search);
 
   document.getElementById("procura0").value = searchParams.get('PEDIDO');
+  document.getElementById("procura1").value = searchParams.get('STATUS');
+  document.getElementById("procura2").value = searchParams.get('LIMITE');
 
   document.getElementById("procura0").addEventListener("keypress", function(event) {
       if (event.key === "Enter") {
-          window.location = `/faturamento/korp/pedidos?PEDIDO=${document.getElementById("procura0").value}`
+          window.location = `/faturamento/korp/pedidos?PEDIDO=${document.getElementById("procura0").value}&STATUS=${document.getElementById('procura1').value}&LIMITE=${document.getElementById('procura2').value}`
       }
   });
+
+  document.getElementById("procura2").addEventListener("keypress", function(event) {
+      if (event.key === "Enter") {
+          window.location = `/faturamento/korp/pedidos?PEDIDO=${document.getElementById("procura0").value}&STATUS=${document.getElementById('procura1').value}&LIMITE=${document.getElementById('procura2').value}`
+      }
+  });
+
 </script>
 
 
