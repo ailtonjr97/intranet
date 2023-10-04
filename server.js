@@ -16,6 +16,7 @@ const comercial = require("./routes/comercial.js");
 const faturamento = require("./routes/faturamento.js");
 const logistica = require("./routes/logistica.js");
 const financeiro = require("./routes/financeiro.js");
+const compras = require("./routes/compras.js");
 dotenv.config();
 const app = express();
 
@@ -126,6 +127,7 @@ app.use("/comercial", authenticationMiddleware, comercial);
 app.use("/faturamento", authenticationMiddleware, faturamento);
 app.use("/logistica", authenticationMiddleware, logistica);
 app.use("/financeiro", authenticationMiddleware, financeiro);
+app.use("/compras", authenticationMiddleware, compras);
 
 app.listen(process.env.PORT, function () {
   console.log("Node.js funcionando na porta " + process.env.PORT);

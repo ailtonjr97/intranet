@@ -93,13 +93,13 @@ const produtosKorp = async(req, res)=>{
         if(req.query.CODIGO == undefined || req.query.CODIGO == 'undefined' || req.query.CODIGO == ''){
             var codigo = ''
         }else{
-            codigo = req.query.LIMITE
+            codigo = req.query.CODIGO
         }
 
         if(req.query.DESCRI == undefined || req.query.DESCRI == 'undefined' || req.query.DESCRI == ''){
             var descri = ''
         }else{
-            descri = req.query.LIMITE
+            descri = req.query.DESCRI
         }
 
         await sql.connect(sqlConfig);

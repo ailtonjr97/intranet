@@ -45,6 +45,19 @@
                             </select>
                             <label for="admin">Admin?</label>
                         </div>
+                        <div class="form-floating" style="min-width: 15%;">
+                            <select class="form-select" id="pedidos" name="pedidos">
+                                <%if(contents == 1){%>
+                                    <option value="<%=contents%>">Sim</option>
+                                    <option value="0">Não</option>
+                                <%}%>
+                                <%if(contents == 0){%>
+                                    <option value="<%=contents%>">Não</option>
+                                    <option value="1">Sim</option>
+                                <%}%>
+                            </select>
+                            <label for="pedidos">Vê pedidos?</label>
+                        </div>
                     </div>
                 </div>
                 <div class="row mt-3">

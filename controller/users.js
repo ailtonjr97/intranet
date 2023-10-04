@@ -89,8 +89,14 @@ const ativar = async(req, res)=>{
 
 const editar = async(req, res)=>{
     try {
+        const conn = await mysqlConnect.connect();
+        const contentsQuery = `SELECT * FROM permissions WHERE id = ${req.params.id}`;
+
+        const contents = await conn.query(contentsQuery);
+
         res.render('users/editar', {
-            user: await db.getUserById(req.params.id)
+            user: await db.getUserById(req.params.id),
+            contents: contents[0][0].visualiza_pedido
         });
     } catch (error) {
         console.log(error)
@@ -101,6 +107,11 @@ const editar = async(req, res)=>{
 const editarUser = async(req, res)=>{
     try {
         await db.editarUser(req.params.id, req.body);
+
+        const conn = await mysqlConnect.connect();
+        const contentsQuery = `update permissions set visualiza_pedido = ${req.body.pedidos} where user_id = ${req.params.id}`;
+        await conn.query(contentsQuery);
+
         res.redirect("/usuarios");
     } catch (error) {
         console.log(error)
