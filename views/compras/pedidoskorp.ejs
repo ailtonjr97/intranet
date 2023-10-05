@@ -47,7 +47,7 @@
         <thead>
           <tr style="height: 25px">
             <th>Número do Documento</th>
-            <th>Data do Pedido</th>
+            <th>Data de Emissão</th>
             <th>Fornecedor</th>
             <th>Ações</th>
           </tr>
@@ -59,14 +59,14 @@
                 <p><%=content.NDOC%></p>
             </td>
             <td>
-              <p><%=content.DTPED%></p>
+              <p><%=content.DTEMI%></p>
             </td>
             <td>
               <p>
-                <% if(content.FORNECE.length >= 60){%>
-                    <%=content.FORNECE.substring(0, 60) + '...'%>
+                <% if(content.RASSOC.length >= 60){%>
+                    <%=content.RASSOC.substring(0, 60) + '...'%>
                 <%}else{%>
-                    <%=content.FORNECE%>
+                    <%=content.RASSOC%>
                 <%}%>
               </p>
             </td>
@@ -78,7 +78,6 @@
           </tr>
           <%})%>
         </tbody>
-        <tbody></tbody>
       </table>
     </div>
     <%}else{%>
@@ -90,24 +89,24 @@
   const searchParams = new URLSearchParams(window.location.search);
 
   document.getElementById("procura0").value = searchParams.get('NDOC');
-  document.getElementById("procura1").value = searchParams.get('FORNECE');
+  document.getElementById("procura1").value = searchParams.get('RASSOC');
   document.getElementById("procura2").value = searchParams.get('LIMITE');
 
   document.getElementById("procura0").addEventListener("keypress", function(event) {
       if (event.key === "Enter") {
-          window.location = `/compras/korp/pedidos?NDOC=${document.getElementById("procura0").value}&FORNECE=${document.getElementById('procura1').value}&LIMITE=${document.getElementById('procura2').value}`
+          window.location = `/compras/korp/pedidos?NDOC=${document.getElementById("procura0").value}&RASSOC=${document.getElementById('procura1').value}&LIMITE=${document.getElementById('procura2').value}`
       }
   });
 
   document.getElementById("procura1").addEventListener("keypress", function(event) {
       if (event.key === "Enter") {
-          window.location = `/compras/korp/pedidos?NDOC=${document.getElementById("procura0").value}&FORNECE=${document.getElementById('procura1').value}&LIMITE=${document.getElementById('procura2').value}`
+          window.location = `/compras/korp/pedidos?NDOC=${document.getElementById("procura0").value}&RASSOC=${document.getElementById('procura1').value}&LIMITE=${document.getElementById('procura2').value}`
       }
   });
 
   document.getElementById("procura2").addEventListener("keypress", function(event) {
       if (event.key === "Enter") {
-          window.location = `/compras/korp/pedidos?NDOC=${document.getElementById("procura0").value}&FORNECE=${document.getElementById('procura1').value}&LIMITE=${document.getElementById('procura2').value}`
+          window.location = `/compras/korp/pedidos?NDOC=${document.getElementById("procura0").value}&RASSOC=${document.getElementById('procura1').value}&LIMITE=${document.getElementById('procura2').value}`
       }
   });
 

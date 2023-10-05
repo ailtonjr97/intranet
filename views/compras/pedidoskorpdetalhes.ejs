@@ -1,0 +1,155 @@
+<%- include('../partials/sidebar') %>
+
+<body>
+    <div class="row mt-3">
+        <h1>Detalhes do pedido <%=contents.NDOC%></h1>
+    </div>
+    <div class="row mt-2">
+        <div class="col-sm-2">
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="USUARIO" value="<%=contents.USUARIO%>" readonly>
+                <label for="USUARIO">Usuario:</label>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="RASSOC" value="<%=contents.RASSOC%>" readonly>
+                <label for="RASSOC">Razão Social:</label>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="CEP" value="<%=contents.CEP%>" readonly>
+                <label for="CEP">CEP:</label>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="CGC" value="<%=contents.CGC%>" readonly>
+                <label for="CGC">CGC:</label>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="INSC" value="<%=contents.INSC%>" readonly>
+                <label for="INSC">Incrição:</label>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="CODFOR" value="<%=contents.CODFOR%>" readonly>
+                <label for="CODFOR">Código Fornecedor:</label>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="CONDI" value="<%=contents.CONDI%>" readonly>
+                <label for="CONDI">Condição:</label>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="DATAHORA" value="<%=contents.DATAHORA.toLocaleString("pt-BR")%>" readonly>
+                <label for="DATAHORA">Data Hora:</label>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <%if(contents.DTEMI){%>
+        <div class="col">
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="DTEMI" value="<%=contents.DTEMI[6]%><%=contents.DTEMI[7]%>/<%=contents.DTEMI[4]%><%=contents.DTEMI[5]%>/<%=contents.DTEMI[0]%><%=contents.DTEMI[1]%><%=contents.DTEMI[2]%><%=contents.DTEMI[3]%>" readonly>
+                <label for="DTEMI">Data Emissão:</label>
+            </div>
+        </div>
+        <%}%>
+        <div class="col">
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="EMAIL" value="<%=contents.EMAIL%>" readonly>
+                <label for="EMAIL">Email:</label>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-floating mb-3">
+                <input type="number" class="form-control" id="NUM_REQ" value="<%=contents.NUM_REQ%>" readonly>
+                <label for="NUM_REQ">Número Requisição:</label>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="REQUISITANTE" value="<%=contents.REQUISITANTE%>" readonly>
+                <label for="REQUISITANTE">Requisitante:</label>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="STATUS" value="<%=contents.STATUS%>" readonly>
+                <label for="STATUS">Status:</label>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="ENDERECO" value="<%=contents.ENDERECO%>" readonly>
+                <label for="ENDERECO">Endereço:</label>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="CIDADE" value="<%=contents.CIDADE%>" readonly>
+                <label for="CIDADE">Cidade:</label>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="ESTADO" value="<%=contents.ESTADO%>" readonly>
+                <label for="ESTADO">Estado:</label>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="form-floating">
+                <textarea class="form-control" placeholder="Observação" id="<%=obs.obs%>" readonly>
+                    <%=obs.obs%>
+                </textarea>
+                <label for="<%=obs.obs%>">Observação:</label>
+              </div>
+        </div>
+    </div>
+    <div class="row mt-2">
+        <div class="col">
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="TEL" value="<%=contents.TEL%>" readonly>
+                <label for="TEL">Telefone:</label>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-floating mb-3">
+                <input type="number" class="form-control" id="VIAS" value="<%=contents.VIAS%>" step="0.01" readonly>
+                <label for="VIAS">Vias:</label>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="CONTATO" value="<%=contents.CONTATO%>" readonly>
+                <label for="CONTATO">Contato:</label>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="FAX" value="<%=contents.FAX%>" readonly>
+                <label for="FAX">Fax:</label>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="TRANSP" value="<%=transp%>" readonly>
+                <label for="TRANSP">Transportadora:</label>
+            </div>
+        </div>
+    </div>
+</body>

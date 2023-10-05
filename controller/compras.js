@@ -27,17 +27,16 @@ const home = async(req, res)=>{
 
 const pedidosKorp = async(req, res)=>{
     try {
-
         if(req.query.NDOC == undefined || req.query.NDOC == 'undefined' || req.query.NDOC == ''){
             var NDOC = ''
         }else{
             NDOC = req.query.NDOC
         }
 
-        if(req.query.FORNECE == undefined || req.query.FORNECE == 'undefined' || req.query.FORNECE == ''){
-            var FORNECE = ''
+        if(req.query.RASSOC == undefined || req.query.RASSOC == 'undefined' || req.query.RASSOC == ''){
+            var RASSOC = ''
         }else{
-            FORNECE = req.query.FORNECE
+            RASSOC = req.query.RASSOC
         }
 
         if(req.query.LIMITE == undefined || req.query.LIMITE == 'undefined' || req.query.LIMITE == ''){
@@ -48,8 +47,8 @@ const pedidosKorp = async(req, res)=>{
 
         await sql.connect(sqlConfig);
 
-        const parcliseQuery = `SELECT DISTINCT TOP ${LIMITE} NDOC, DTPED, FORNECE FROM PARCLISE WHERE NDOC LIKE '%${NDOC}%' AND FORNECE LIKE '%${FORNECE}%'`; //PEDIDOS ABERTOS
-        const parcliseCountQuery = `SELECT COUNT(NDOC) as contagem FROM PARCLISE WHERE NDOC LIKE '%${NDOC}%' AND FORNECE LIKE '%${FORNECE}%'`; 
+        const parcliseQuery = `SELECT TOP ${LIMITE} NDOC, DTEMI, RASSOC FROM PEDIDO_FOR WHERE NDOC LIKE '%${NDOC}%' AND RASSOC LIKE '%${RASSOC}%' order by NDOC DESC`;
+        const parcliseCountQuery = `SELECT COUNT(NDOC) AS contagem FROM PEDIDO_FOR WHERE NDOC LIKE '%${NDOC}%' AND RASSOC LIKE '%${RASSOC}%'`; 
 
         const parclise = await sql.query(parcliseQuery);
         const parcliseCount = await sql.query(parcliseCountQuery);
@@ -59,12 +58,36 @@ const pedidosKorp = async(req, res)=>{
             parcliseContagem: parcliseCount.recordset[0].contagem
         });
     } catch (error) {
-        console.log(error);
+        console.log(error.originalError.info.message);
         res.render('error');
+    }
+}
+
+const pedidosKorpDetalhes = async(req, res)=>{
+    try {
+        await sql.connect(sqlConfig);
+
+        const parcliseQuery = `SELECT * FROM PEDIDO_FOR WHERE NDOC = ${req.params.id}`;
+        const parcliseObsQuery = `SELECT CAST(CAST (OBS1 AS varbinary(MAX)) AS VARCHAR(MAX)) as obs FROM PEDIDO_FOR WHERE NDOC = ${req.params.id}`;
+        const parcliseTranspQuery = `SELECT F.RASSOC AS transp FROM PEDIDO_FOR P left join FORNECED F ON P.TRANSP = F.CODIGO WHERE NDOC = ${req.params.id}`
+
+        const parclise = await sql.query(parcliseQuery);
+        const parcliseObs = await sql.query(parcliseObsQuery);
+        const parcliseTranspObs = await sql.query(parcliseTranspQuery);
+
+        res.render('compras/pedidoskorpdetalhes', {
+            contents: parclise.recordset[0],
+            obs: parcliseObs.recordset[0],
+            transp: parcliseTranspObs.recordset[0].transp
+        })
+    } catch (error) {
+        console.log(error);
+        res.send('error')
     }
 }
 
 module.exports = {
     home,
-    pedidosKorp
+    pedidosKorp,
+    pedidosKorpDetalhes
 };
