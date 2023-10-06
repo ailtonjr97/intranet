@@ -9,46 +9,38 @@
     <div class="row mt-2">
         <h1 style="color: black;">Detalhes do pedido <%=contents.PEDIDO%></h1>
     </div>
-    <div class="row mt-2">
-      <div class="col-sm-2">
-          <div class="form-floating">
-            <input type="text" class="form-control" id="cliente" value="<%=contents.CLIENTE%>" readonly>
-            <label for="cliente">Código cliente:</label>
-          </div>
-      </div>
+    <div class="row">
       <div class="col">
-          <div class="form-floating">
-            <input type="text" class="form-control" id="nome" value="" readonly>
-            <label for="nome">Nome cliente:</label>
-          </div>
+        <div class="form-floating">
+          <textarea class="form-control" placeholder="Observação" id="<%=obs.obs%>" readonly>
+              <%=obs%>
+          </textarea>
+          <label for="<%=obs.obs%>">Observação:</label>
+        </div>
       </div>
     </div>
-    <div class="row mt-4">
-        <div class="table-wrapper table-responsive table-striped mb-4">
-            <table class="fl-table" id="myTable">
-              <thead>
-                <tr style="height: 25px">
-                  <th>ID</th>
-                  <th>Código produto</th>
-                  <th>Descritivo</th>
-                  <th>Quantidade venda</th>
-                  <th>Quantidade entrada</th>
-                  <th>Preço unitário</th>
-                  <th>Preço total</th>
-                  <th>Desconto</th>
-                  <th>Data entrega</th>
-                  <th>Data faturamento</th>
-                </tr>
-              </thead>
-              <tbody>
-                <%itens.forEach ((item)=>{%>
-                <tr>
-                </tr>
-                <%})%>
-              </tbody>
-              <tbody></tbody>
-            </table>
+    <div class="row mt-2">
+      <%chaves.forEach((chave)=>{%>
+      <%if(contents[chave] || typeof contents[chave] == 'string' || typeof contents[chave] == 'number'){%>
+      <div class="col-md-3 mb-2">
+          <div class="form-floating">
+            <input 
+            <%if(typeof contents[chave] == 'string'){%>
+            type="text"
+            <%}%>
+            <%if(typeof contents[chave] == 'number'){%>
+              type="number"
+            <%}%>
+            class="form-control"
+            id="cliente"
+            value="<%=contents[chave]%>"
+            readonly
+            >
+            <label for="cliente"><%=chave%>:</label>
           </div>
+      </div>
+      <%}%>
+      <%})%>
     </div>
 </body>
 <%}else{%>

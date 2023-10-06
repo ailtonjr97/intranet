@@ -462,16 +462,19 @@ const pedidosKorpDetalhes = async(req, res)=>{
 
         const pedido = req.params.ano + '/' + req.params.id
         const contentsQuery = `SELECT * FROM CRM_PEDIDO WHERE PEDIDO = '${pedido}'`;
-        //const contentsQuery = `SELECT * FROM CRM_PEDIDO AS P INNER JOIN CRM_ITEM_PEDIDO AS I ON I.PEDIDO = P.R_E_C_N_O_ WHERE P.PEDIDO = '${pedido}'`;
+        const pedidoObsQuery = `SELECT CAST(CAST (OBSERVACAO AS varbinary(MAX)) AS VARCHAR(MAX)) as obs FROM CRM_PEDIDO WHERE PEDIDO = '${pedido}'`;
 
-        const contents = await sql.query(contentsQuery)
+        const contents = await sql.query(contentsQuery);
+        const obs = await sql.query(pedidoObsQuery);
 
         res.render('faturamento/pedidoskorpdetalhes', {
             contents: contents.recordset[0],
-            itens: []
+            chaves: Object.keys(contents.recordset[0]),
+            obs: obs.recordset[0].obs
         });
     } catch (error) {
-        
+        console.log(error);
+        res.render('error');
     }
 }
 
