@@ -1,6 +1,6 @@
-const mysqlConnect = require('../db')
-const axios = require('axios')
-const sql = require('mssql')
+const mysqlConnect = require('../db');
+const sql = require('mssql');
+const fs = require('fs')
 
 const sqlConfig = {
     user: process.env.MSUSER,
@@ -45,23 +45,37 @@ const produtos = async(req, res)=>{
 
 const atualizarSB1 = async(req, res)=>{
     try {
-        const limitador = await axios.get(process.env.APITOTVS + "CONSULTA_PRO/get_all", {auth: {username: process.env.USERTOTVS, password: process.env.SENHAPITOTVS}})
-        const response = await axios.get(process.env.APITOTVS + "CONSULTA_PRO/get_all?limit=" + limitador.data.meta.total, {auth: {username: process.env.USERTOTVS, password: process.env.SENHAPITOTVS}})
-
         const conn = await mysqlConnect.connect();
-        await conn.query("TRUNCATE sb1_produtos");
-    
+        var data = fs.readFileSync('storage/sb1.csv')
+        .toString() // convert Buffer to string
+        .split('\n') // split string to lines
+        .map(e => e.trim()) // remove white spaces for each line
+        .map(e => e.replace(/[())]+/g, ''))
+
+        var data2 = fs.readFileSync('storage/sb1.csv')
+        .toString() // convert Buffer to string
+        .split('\n') // split string to lines
+        .map(e => e.trim()) // remove white spaces for each line
+        .map(e => e.replace(/['"]+/g, ''))
+        .map(e => e.split(',').map(e => e.trim())); // split each line to array
+
         const values = [];
-    
-        response.data.objects.forEach(response => {
-            values.push([response.cod, response.tipo, response.um, response.grupo, response.peso, response.urev, response.desc, response.pesbru]) 
+        const colunas = []
+
+        data2[0].forEach(async element => {
+            colunas.push(element)
+        });
+
+        data.forEach(async (element, index) => {
+            if(index < 17112) return;
+            values.push(element)
         });
     
-        await conn.query("INSERT INTO sb1_produtos (cod, tipo, um, grupo, peso, urev, descri, pesbru) VALUES ?", [values], function(err) {
+        await conn.query(`INSERT INTO sb1_produtos (${colunas}) VALUES (${values})`, [], function(err) {
             if (err) throw err;
         });
 
-        res.redirect('/logistica/produtos')
+        // res.redirect('/logistica/produtos')
     } catch (error) {
         res.render('error')
         console.log(error)
