@@ -27,13 +27,19 @@
       <div class="col">
         <div class="form-floating">
           <input type="text" class="form-control" id="procura0"/>
-          <label for="procuraBtn0">Código:</label>
+          <label for="procura0">Código:</label>
         </div>
       </div>
       <div class="col">
         <div class="form-floating">
           <input type="text" class="form-control" id="procura1"/>
-          <label for="procuraBtn3">Descrição:</label>
+          <label for="procura1">Descrição:</label>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-floating">
+          <input type="number" class="form-control" id="procura2" oninput="this.value = !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null"/>
+          <label for="procura2">Limite:</label>
         </div>
       </div>
     </div>
@@ -52,16 +58,16 @@
           <%contents.forEach ((content)=>{%>
           <tr>
             <td>
-                <p><%=content.cod%></p>
+                <p><%=content.B1_COD%></p>
             </td>
             <td>
-              <p><%=content.tipo%></p>
+              <p><%=content.B1_TIPO%></p>
             </td>
             <td>
-                <p><%=content.um%></p>
+                <p><%=content.B1_UM%></p>
             </td>
             <td>
-                <p><%=content.descri%></p>
+                <p><%=content.B1_DESC%></p>
             </td>
             <td>
               <a href="/logistica/produtos/detalhes/<%=content.id%>">
@@ -79,18 +85,25 @@
 const searchParams = new URLSearchParams(window.location.search);
 
 document.getElementById("procura0").value = searchParams.get('CODIGO');
-document.getElementById("procura1").value = searchParams.get('DESCRI');
+document.getElementById("procura1").value = searchParams.get('DESC');
+document.getElementById("procura2").value = searchParams.get('LIMITE');
 
 document.getElementById("procura0").addEventListener("keypress", function(event) {
     if (event.key === "Enter") {
-        window.location = `/logistica/produtos?CODIGO=${document.getElementById("procura0").value}&DESCRI=${document.getElementById("procura1").value}`
-    }
+        window.location = `/logistica/produtos?CODIGO=${document.getElementById("procura0").value}&DESC=${document.getElementById("procura1").value}&LIMITE=${document.getElementById("procura2").value}`
+    };
 });
 
 document.getElementById("procura1").addEventListener("keypress", function(event) {
     if (event.key === "Enter") {
-        window.location = `/logistica/produtos?CODIGO=${document.getElementById("procura0").value}&DESCRI=${document.getElementById("procura1").value}`
-    }
+        window.location = `/logistica/produtos?CODIGO=${document.getElementById("procura0").value}&DESC=${document.getElementById("procura1").value}&LIMITE=${document.getElementById("procura2").value}`
+    };
+});
+
+document.getElementById("procura2").addEventListener("keypress", function(event) {
+    if (event.key === "Enter") {
+        window.location = `/logistica/produtos?CODIGO=${document.getElementById("procura0").value}&DESC=${document.getElementById("procura1").value}&LIMITE=${document.getElementById("procura2").value}`
+    };
 });
 </script>
 

@@ -1,6 +1,7 @@
 const mysqlConnect = require('../db');
 const sql = require('mssql');
 const fs = require('fs')
+const { parse } = require('csv-parse');
 
 const sqlConfig = {
     user: process.env.MSUSER,
@@ -26,8 +27,26 @@ const produtos = async(req, res)=>{
     try {
         const conn = await mysqlConnect.connect();
 
-        const resultsQuery = `SELECT COUNT(*) AS contagem FROM sb1_produtos WHERE cod like '%${req.query.CODIGO}%' AND descri LIKE '%${req.query.DESCRI}%'`;
-        const contentsQuery = `SELECT * FROM sb1_produtos WHERE cod like '%${req.query.CODIGO}%' AND descri LIKE '%${req.query.DESCRI}%'`;
+        if(req.query.CODIGO == undefined || req.query.CODIGO == 'undefined' || req.query.CODIGO == ''){
+            var CODIGO = ''
+        }else{
+            CODIGO = req.query.CODIGO
+        }
+
+        if(req.query.DESC == undefined || req.query.DESC == 'undefined' || req.query.DESC == ''){
+            var DESC = ''
+        }else{
+            DESC = req.query.DESC
+        }
+
+        if(req.query.LIMITE == undefined || req.query.LIMITE == 'undefined' || req.query.LIMITE == ''){
+            var LIMITE = 200
+        }else{
+            LIMITE = req.query.LIMITE
+        }
+
+        const resultsQuery = `SELECT COUNT(*) AS contagem FROM sb1_produtos WHERE B1_COD like '%${CODIGO}%' AND B1_DESC LIKE '%${DESC}%'`;
+        const contentsQuery = `SELECT * FROM sb1_produtos WHERE B1_COD like '%${CODIGO}%' AND B1_DESC LIKE '%${DESC}%' LIMIT ${LIMITE}`;
         
         const results = await conn.query(resultsQuery);
         const contents = await conn.query(contentsQuery);
@@ -46,39 +65,25 @@ const produtos = async(req, res)=>{
 const atualizarSB1 = async(req, res)=>{
     try {
         const conn = await mysqlConnect.connect();
-        var data = fs.readFileSync('storage/sb1.csv')
-        .toString() // convert Buffer to string
-        .split('\n') // split string to lines
-        .map(e => e.trim()) // remove white spaces for each line
-        .map(e => e.replace(/[())]+/g, ''))
-
-        var data2 = fs.readFileSync('storage/sb1.csv')
-        .toString() // convert Buffer to string
-        .split('\n') // split string to lines
-        .map(e => e.trim()) // remove white spaces for each line
-        .map(e => e.replace(/['"]+/g, ''))
-        .map(e => e.split(',').map(e => e.trim())); // split each line to array
-
+        const columns = [];
         const values = [];
-        const colunas = []
+        fs.readFile('storage/sb1.csv', function (err, fileData) {
+            parse(fileData, {columns: false, trim: true}, async function(err, rows) {
+                columns.push(rows[0]);
+                
+                values.push(rows);
+                values[0].shift();
 
-        data2[0].forEach(async element => {
-            colunas.push(element)
+                await conn.query(`INSERT INTO sb1_produtos (${columns}) VALUES ?`, [values[0]], function(err) {
+                    if (err) throw err;
+                });
+            });
         });
 
-        data.forEach(async (element, index) => {
-            if(index < 17112) return;
-            values.push(element)
-        });
-    
-        await conn.query(`INSERT INTO sb1_produtos (${colunas}) VALUES (${values})`, [], function(err) {
-            if (err) throw err;
-        });
-
-        // res.redirect('/logistica/produtos')
+        res.redirect('/logistica/produtos');
     } catch (error) {
-        res.render('error')
-        console.log(error)
+        res.render('error');
+        console.log(error);
     }
 }
 
@@ -87,8 +92,10 @@ const detalhes = async(req, res)=>{
         const conn = await mysqlConnect.connect();
         const produto = await conn.query('SELECT * FROM sb1_produtos WHERE id = ?', req.params.id);
 
+        console.log(Object.keys(produto[0][0]))
+
         res.render('logistica/detalhes', {
-            produto: produto[0][0]
+            contents: produto[0]
         })
     } catch (error) {
         console.log(error)
